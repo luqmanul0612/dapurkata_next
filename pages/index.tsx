@@ -8,6 +8,7 @@ import { TBook } from "../src/types/book";
 export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
     props: { data: bookData },
+    revalidate: 10
   };
 };
 

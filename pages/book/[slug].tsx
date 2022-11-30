@@ -18,6 +18,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const slug = params.slug;
   return {
     props: { data: bookData?.find((val) => val.slug === slug) },
+    revalidate: 10
   };
 };
 

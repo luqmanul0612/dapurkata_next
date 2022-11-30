@@ -20,10 +20,12 @@ export default Navbar
 const Main = styled.div`
   display: flex;
   width: 100%;
+  position: fixed;
   align-items: center;
   padding: 0 50px;
   background: #fff;
   min-height: 60px;
+  z-index: 10;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   > div.logo-wrapper {
     display: flex;

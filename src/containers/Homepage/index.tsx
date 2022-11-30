@@ -1,24 +1,32 @@
 import Image from "next/image"
+import { FC } from "react"
 import styled from "styled-components"
-import BookCard from "../../components/BookCard"
+import BookList from "../../components/BookList"
 import Button from "../../components/elements/Button"
-import { bookData } from "../../data/books"
+import { TBook } from "../../types/book"
 
-const Homepage = () => {
+type THomepage = {
+  data: TBook[]
+}
+
+const Homepage: FC<THomepage> = ({ data }) => {
   return (
-    <Main>
-      <div className="content">
-        <div className="title">
-          <p>Penerbit DapurKata</p>
-          <p>"Di sini, naskahmu diracik dengan sempurna."</p>
+    <>
+      <Main>
+        <div className="content">
+          <div className="title">
+            <p>Penerbit DapurKata</p>
+            <p>"Di sini, naskahmu diracik dengan sempurna."</p>
+          </div>
+          <Image src="/img/banner.svg" width={400} height={300} alt="pic" />
+          <div className="button-wrapper">
+            <Button variant="contained" label="Pesan Sekarang" />
+            <Button variant="outline" label="Dafter Buku" />
+          </div>
         </div>
-        <Image src="/img/banner.svg" width={400} height={300} alt="pic"/>
-        <div className="button-wrapper">
-          <Button variant="contained" label="Pesan Sekarang"/>
-          <Button variant="outline" label="Dafter Buku"/>
-        </div>
-      </div>
-    </Main>
+      </Main>
+      <BookList data={data}/>
+    </>
   )
 }
 
@@ -26,6 +34,7 @@ export default Homepage
 
 const Main = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 50px);

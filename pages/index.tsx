@@ -1,16 +1,18 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import { FC } from "react";
-import data from "../data/content"
-import Homepage from "../containers/Homepage";
+import { bookData } from "../src/data/books";
+import Homepage from "../src/containers/Homepage";
+import { TBook } from "../src/types/book";
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
-    props: { data },
+    props: { data: bookData },
   };
 };
+
 type THome = {
-  data: any;
+  data: TBook[];
 };
 
 const Home: FC<THome> = ({ data }) => {
@@ -20,7 +22,7 @@ const Home: FC<THome> = ({ data }) => {
         <title>Homepage</title>
         <link rel="icon" href="/dklogo.svg" />
       </Head>
-      <Homepage />
+      <Homepage data={bookData} />
     </>
   );
 };

@@ -50,7 +50,7 @@ const Main = styled.div`
   > div.content {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-  padding: 40px 60px;
+    padding: 40px 60px;
   }
   > div.footer-message {
     display: flex;

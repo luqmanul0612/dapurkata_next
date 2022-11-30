@@ -1,8 +1,9 @@
 import type { AppProps } from 'next/app'
 import { ThemeProvider, DefaultTheme } from 'styled-components'
-import Footer from '../components/Footer'
-import GlobalStyle from '../components/globalstyles'
-import Navbar from '../components/Navbar'
+import Footer from '../src/components/Footer'
+import GlobalStyle from '../src/components/globalstyles'
+import Navbar from '../src/components/Navbar'
+import '../src/styles.css'
 
 const theme: DefaultTheme = {
   colors: {

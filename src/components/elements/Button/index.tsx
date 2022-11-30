@@ -21,6 +21,7 @@ type TMain = {
 
 const Main = styled.button<TMain>`
   outline: none;
+  width: fit-content;
   border: none;
   padding: 7px 15px;
   border-radius: 30px;

@@ -16,19 +16,19 @@ const Footer = () => {
         <Media>
           <p>Sosial Media</p>
           <div className="icon-wrapper">
-            <div>
+            <div onClick={() => window.open("https://www.facebook.com/dapur.kata.77")}>
               <Facebook />
             </div>
-            <div>
+            <div onClick={() => window.open("https://www.instagram.com/dapurkata.id/")}>
               <Instagram />
             </div>
-            <div>
+            <div onClick={() => window.open("https://twitter.com/DapurKatadotid")}>
               <Twitter />
             </div>
-            <div>
+            <div onClick={() => window.open("mailto:dapurkata.id@gmail.com?subject")}>
               <Gmail />
             </div>
-            <div>
+            <div onClick={() => window.open("https://wa.link/i4bf6x")}>
               <Whatsapp />
             </div>
           </div>

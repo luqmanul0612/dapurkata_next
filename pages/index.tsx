@@ -20,7 +20,7 @@ const Home: FC<THome> = ({ data }) => {
     <>
       <Head>
         <title>Homepage</title>
-        <link rel="icon" href="/dklogo.svg" />
+        <link rel="icon" href="/icons/dklogo.svg" />
       </Head>
       <Homepage data={bookData} />
     </>

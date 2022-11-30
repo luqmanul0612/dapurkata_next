@@ -10,7 +10,7 @@ type TBookCard = {
 }
 
 const BookCard: FC<TBookCard> = ({ data, onClick }) => {
-  console.log(data)
+  
   return (
     <Main onClick={onClick}>
       <div className="cover">
@@ -39,6 +39,7 @@ const Main = styled.div`
   flex-direction: column;
   aspect-ratio: 2/2.8;
   padding: 7px;
+  background: #fff;
   border-radius: 3px;
   cursor: pointer;
   border: 1px solid transparent;

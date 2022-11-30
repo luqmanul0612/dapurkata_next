@@ -2,9 +2,9 @@ export type TBook = {
   id: number | string;
   title: string;
   authorName: string;
-  price: 50000,
-  jumlah: 100,
-  status: string;
+  price: number,
+  jumlah: number,
+  stock: number;
   publisher: string;
   description: string;
   coverUrl: string;

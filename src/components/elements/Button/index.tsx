@@ -2,12 +2,13 @@ import styled, { css } from "styled-components"
 
 type TButton = {
   label: string;
-  variant: "outline" | "contained"
+  variant: "outline" | "contained";
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const Button = (props: TButton) => {
   return (
-    <Main variant={props.variant}>
+    <Main variant={props.variant} onClick={props.onClick}>
       {props.label}
     </Main>
   )

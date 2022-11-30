@@ -29,8 +29,8 @@ const BookPath: FC<TBookPath> = ({ data }) => {
   return (
     <>
       <Head>
-        <title>Book</title>
-        <link rel="icon" href="/dklogo.svg" />
+        <title>{data.title}</title>
+        <link rel="icon" href="/icons/dklogo.svg" />
       </Head>
       <Book data={data} />
     </>

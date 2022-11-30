@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { useRouter } from "next/router"
 import { FC } from "react"
 import styled from "styled-components"
 import BookList from "../../components/BookList"
@@ -11,10 +12,30 @@ type TBookContainer = {
 }
 
 const Book: FC<TBookContainer> = ({ data }) => {
+  const router = useRouter()
+  const detail = [
+    {
+      label: "Jumlah Halaman",
+      value: data.jumlah
+    },
+    {
+      label: "ISBN",
+      value: data.ISBN
+    },
+    {
+      label: "Penerbit",
+      value: data.publisher
+    },
+    {
+      label: "Stok",
+      value: data.stock
+    }
+  ]
 
   return (
     <Main>
       <div className="content">
+        <Back onClick={()=>router.back()}>{"< Kembali"}</Back>
         <BookInfo>
           <div className="cover">
             <div>
@@ -43,6 +64,17 @@ const Book: FC<TBookContainer> = ({ data }) => {
           <p className="title">Deskripsi Buku</p>
           <p className="value">{data.description}</p>
         </Description>
+        <Detail>
+          <p className="title">Detail</p>
+          <div className="item-wrapper">
+            {detail.map((val) => (
+              <div key={val.label}>
+                <p className="label">{val.label}</p>
+                <p className="value">{val.value}</p>
+              </div>
+            ))}
+          </div>
+        </Detail>
       </div>
     </Main>
   )
@@ -55,7 +87,8 @@ const Main = styled.div`
   flex-direction: column;
   min-height: calc(100vh - 60px);
   padding: 100px 60px 0 60px;
-  background: #eff3f7;
+  background: #e7edf2;
+  padding-bottom: 30px;
   >div.content {
     display: flex;
     flex-direction: column;
@@ -159,4 +192,59 @@ const Description = styled.div`
     line-height: 1.6;
     color: #495569;
   }
+`
+const Detail = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  > p.title {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.3;
+    color: #466899;
+  }
+  > div.item-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      > p:nth-child(1){
+        font-size: 12px;
+        font-weight: 600;
+        margin: 0;
+        padding: 0 10px;
+        line-height: 1;
+        color: #495569;
+      }
+      > p:nth-child(2){
+        font-size: 15px;
+        font-weight: 400;
+        margin: 0;
+        padding: 0 10px;
+        line-height: 1;
+        color: #495569;
+      }
+    }
+  }
+`
+
+const Back = styled.div`
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  padding: 0 10px;
+  line-height: 1;
+  color: #2c313d;
+  cursor: pointer;
+  width: fit-content;
+  padding: 6px 10px;
+  border-radius: 3px;
+  :hover {
+    background: #c9d4e6;
+    color:#3c4a6c;
+  }
+  transition: 0.3s all ease;
 `

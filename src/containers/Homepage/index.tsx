@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { useRouter } from "next/router"
 import { FC } from "react"
 import styled from "styled-components"
 import BookList from "../../components/BookList"
@@ -10,6 +11,7 @@ type THomepage = {
 }
 
 const Homepage: FC<THomepage> = ({ data }) => {
+  const router = useRouter()
   return (
     <>
       <Main>
@@ -20,12 +22,12 @@ const Homepage: FC<THomepage> = ({ data }) => {
           </div>
           <Image src="/img/banner.svg" width={400} height={300} alt="pic" />
           <div className="button-wrapper">
-            <Button variant="contained" label="Pesan Sekarang" />
-            <Button variant="outline" label="Dafter Buku" />
+            <Button variant="contained" label="Pesan Sekarang" onClick={() => window.open("https://wa.link/i4bf6x")} />
+            <Button variant="outline" label="Daftar Buku" onClick={() => router.push({ hash: "#book-list" })} />
           </div>
         </div>
       </Main>
-      <BookList data={data}/>
+      <BookList data={data} />
     </>
   )
 }
@@ -37,7 +39,7 @@ const Main = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 50px);
+  min-height: 100vh;
   background: rgb(255,255,255);
   background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(231,241,255,1) 54%, rgba(181,212,255,1) 100%);
   >div.content{

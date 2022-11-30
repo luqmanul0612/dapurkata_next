@@ -1,10 +1,12 @@
 import Image from "next/image"
+import { useRouter } from "next/router"
 import styled from "styled-components"
 
 const Navbar = () => {
+  const router = useRouter()
   return (
     <Main>
-      <div className="logo-wrapper">
+      <div onClick={()=>router.push("/")} className="logo-wrapper">
         <Image src="/icons/dklogo.svg" height={40} width={40} alt="logo" />
         <div>
           <p>Penerbit</p>
@@ -28,6 +30,7 @@ const Main = styled.div`
   z-index: 10;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   > div.logo-wrapper {
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 10px;

@@ -35,7 +35,7 @@ const Book: FC<TBookContainer> = ({ data }) => {
   return (
     <Main>
       <div className="content">
-        <Back onClick={()=>router.back()}>{"< Kembali"}</Back>
+        <Back onClick={() => router.back()}>{"< Kembali"}</Back>
         <BookInfo>
           <div className="cover">
             <div>
@@ -56,7 +56,7 @@ const Book: FC<TBookContainer> = ({ data }) => {
             </div>
             <div className="section-2">
               <p className="price">{`Rp ${formatToCurrency(data.price, 0)}`}</p>
-              <Button label="Beli Sekarang" variant="contained" />
+              <Button onClick={() => window.open("https://wa.link/i4bf6x")} label="Beli Sekarang" variant="contained" />
             </div>
           </div>
         </BookInfo>

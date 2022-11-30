@@ -35,7 +35,7 @@ const Book: FC<TBookContainer> = ({ data }) => {
   return (
     <Main>
       <div className="content">
-        <Back onClick={() => router.back()}>{"< Kembali"}</Back>
+        <Back onClick={() => router.push({ pathname: "/", hash: "#book-list" })}>{"< Kembali"}</Back>
         <BookInfo>
           <div className="cover">
             <div>

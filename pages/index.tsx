@@ -4,11 +4,16 @@ import { FC } from "react";
 import { bookData } from "../src/data/books";
 import Homepage from "../src/containers/Homepage";
 import { TBook } from "../src/types/book";
+import axios from "axios";
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
+  const res = await axios({
+    method: "GET",
+    url: `${process.env.BASE_URL}/api/book`,
+  });
   return {
-    props: { data: bookData },
-    revalidate: 10
+    props: { data: res.data.data },
+    revalidate: 1
   };
 };
 
@@ -23,7 +28,7 @@ const Home: FC<THome> = ({ data }) => {
         <title>Homepage</title>
         <link rel="icon" href="/icons/dklogo.svg" />
       </Head>
-      <Homepage data={bookData} />
+      <Homepage data={data} />
     </>
   );
 };

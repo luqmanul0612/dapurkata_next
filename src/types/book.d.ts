@@ -3,12 +3,12 @@ export type TBook = {
   title: string;
   authorName: string;
   price: number,
-  jumlah: number,
+  numberOfPages: number,
   stock: number;
   publisher: string;
   description: string;
   coverUrl: string;
-  cetakan: string;
-  ISBN: string;
+  printType: string;
+  isbn: string;
   slug: string;
 }

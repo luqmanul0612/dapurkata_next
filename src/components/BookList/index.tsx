@@ -22,31 +22,31 @@ const BookList: FC<TBookList> = ({ data }) => {
   const filterBook = data?.filter((val) => `${val.title.toLowerCase()} ${val.authorName.toLowerCase()}`.includes(search.toLowerCase()))
 
   return (
-    <Main id="book-list">
-      <p className="title">Daftar Buku</p>
-      <Content>
-        <div className="search">
-          <div className="input-wrapper">
-            <SearchIcon />
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Cari berdasarkan judul/penulis"
-            />
+      <Main id="book-list">
+        <p className="title">Daftar Buku</p>
+        <Content>
+          <div className="search">
+            <div className="input-wrapper">
+              <SearchIcon />
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Cari berdasarkan judul/penulis"
+              />
+            </div>
           </div>
-        </div>
-        {filterBook.length > 0 && (
-          <div className="books-wrapper">
-            {filterBook.map((book) => (
-              <div key={book.id}>
-                <BookCard data={book} onClick={() => onClickBook(book.slug)} />
-              </div>
-            ))}
-          </div>
-        )}
-        {filterBook.length === 0 && <NoData>Buku tidak ditemukan</NoData>}
-      </Content>
-    </Main>
+          {filterBook.length > 0 && (
+            <div className="books-wrapper">
+              {filterBook.map((book) => (
+                <div key={book.id}>
+                  <BookCard data={book} onClick={() => onClickBook(book.slug)} />
+                </div>
+              ))}
+            </div>
+          )}
+          {filterBook.length === 0 && <NoData>Buku tidak ditemukan</NoData>}
+        </Content>
+      </Main>
   )
 }
 

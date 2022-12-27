@@ -2,24 +2,24 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { FC } from "react";
 import Book from "../../src/containers/Book";
-import { bookData } from "../../src/data/books";
 import { TBook } from "../../src/types/book";
+import axios from "axios";
+
+type TBooksRes = { statusCode: string; data: TBook[] }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = bookData.map((val) => ({ params: { slug: val.slug } }))
-  return {
-    paths,
-    fallback: false, // can also be true or 'blocking'
-  }
+  const res = await axios<TBooksRes>({ method: "GET", url: `${process.env.BASE_URL}/api/book`, });
+  const paths = res.data.data.map((val) => ({ params: { slug: val.slug } }))
+  return { paths, fallback: false }
 }
+
+type TBookRes = { statusCode: string; data: TBook }
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { params } = ctx;
   const slug = params.slug;
-  return {
-    props: { data: bookData?.find((val) => val.slug === slug) },
-    revalidate: 10
-  };
+  const res = await axios<TBookRes>({ method: "GET", url: `${process.env.BASE_URL}/api/book`, data: { slug } });
+  return { props: { data: res.data.data }, revalidate: 1 };
 };
 
 type TBookPath = {

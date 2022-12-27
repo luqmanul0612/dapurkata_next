@@ -16,11 +16,11 @@ const Book: FC<TBookContainer> = ({ data }) => {
   const detail = [
     {
       label: "Jumlah Halaman",
-      value: data.jumlah
+      value: data.numberOfPages
     },
     {
       label: "ISBN",
-      value: data.ISBN
+      value: data.isbn
     },
     {
       label: "Penerbit",
@@ -41,7 +41,7 @@ const Book: FC<TBookContainer> = ({ data }) => {
             <div>
               <Image
                 src={data.coverUrl}
-                layout="fill"
+                fill
                 alt="cover"
               />
             </div>
@@ -51,7 +51,7 @@ const Book: FC<TBookContainer> = ({ data }) => {
               <p className="title">{data.title}</p>
               <p className="author">{data.authorName}</p>
               <div className="additional">
-                <div>{data.cetakan}</div>
+                <div>{data.printType}</div>
               </div>
             </div>
             <div className="section-2">
@@ -106,7 +106,8 @@ const BookInfo = styled.div`
   >div.cover {
     display: flex;
     padding: 20px;
-    width: 240px;
+    min-width: 240px;
+    height: 240px;
     aspect-ratio: 1/1;
     background: #c3dbf3;
     justify-content: center;

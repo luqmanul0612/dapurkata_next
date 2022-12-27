@@ -10,14 +10,17 @@ type TBookCard = {
 }
 
 const BookCard: FC<TBookCard> = ({ data, onClick }) => {
-  
+
   return (
     <Main onClick={onClick}>
       <div className="cover">
         <Image
           src={data.coverUrl}
-          layout="fill"
+          fill
           alt="cover"
+          sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
         />
       </div>
       <div className="detail">
@@ -25,7 +28,7 @@ const BookCard: FC<TBookCard> = ({ data, onClick }) => {
         <p className="author">{data.authorName}</p>
         <p className="price">{`Rp ${formatToCurrency(data.price, 0)}`}</p>
         <div className="additional">
-          <div>{data.cetakan}</div>
+          <div>{data.printType}</div>
         </div>
       </div>
     </Main>

@@ -22,8 +22,8 @@ const Homepage: FC<THomepage> = ({ data }) => {
           </div>
           <Image src="/img/banner.svg" width={400} height={300} alt="pic" />
           <div className="button-wrapper">
-            <Button variant="contained" label="Pesan Sekarang" onClick={() => window.open("https://wa.link/i4bf6x")} />
-            <Button variant="outline" label="Daftar Buku" onClick={() => router.push({ hash: "#book-list" })} />
+            <Button type="button" variant="contained" label="Pesan Sekarang" onClick={() => window.open("https://wa.link/i4bf6x")} />
+            <Button type="button" variant="outline" label="Daftar Buku" onClick={() => router.push({ hash: "#book-list" })} />
           </div>
         </div>
       </Main>

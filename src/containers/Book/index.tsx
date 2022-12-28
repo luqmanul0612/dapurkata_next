@@ -56,7 +56,7 @@ const Book: FC<TBookContainer> = ({ data }) => {
             </div>
             <div className="section-2">
               <p className="price">{`Rp ${formatToCurrency(data.price, 0)}`}</p>
-              <Button onClick={() => window.open("https://wa.link/i4bf6x")} label="Beli Sekarang" variant="contained" />
+              <Button type="button" onClick={() => window.open("https://wa.link/i4bf6x")} label="Beli Sekarang" variant="contained" />
             </div>
           </div>
         </BookInfo>

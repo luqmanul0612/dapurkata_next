@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import { FC } from "react";
-import { bookData } from "../src/data/books";
 import Homepage from "../src/containers/Homepage";
 import { TBook } from "../src/types/book";
 import axios from "axios";

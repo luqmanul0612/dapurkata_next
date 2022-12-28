@@ -4,7 +4,7 @@ import bcrypt from "bcrypt"
 import prisma from "../../../lib/prisma";
 import { createToken } from "../../../lib/util";
 import { httpCatchError } from "../../../lib/httpCatchError";
-import { decryptRSA, encryptRSA } from "../../../lib/rsa";
+import { decryptRSA } from "../../../lib/rsa";
 
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
@@ -12,7 +12,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     case "POST": {
       try {
         await loginSchema.validate(req.body);
-        const username = decryptRSA(req.body?.username)
+        const username = req.body?.username
         const password = decryptRSA(req.body?.password)
 
         const findUser = await prisma.user.findUnique({

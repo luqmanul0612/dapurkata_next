@@ -4,11 +4,12 @@ type TButton = {
   label: string;
   variant: "outline" | "contained";
   onClick?: React.MouseEventHandler<HTMLButtonElement>
+  type: "button" | "submit"
 }
 
 const Button = (props: TButton) => {
   return (
-    <Main variant={props.variant} onClick={props.onClick}>
+    <Main variant={props.variant} onClick={props.onClick} type={props.type}>
       {props.label}
     </Main>
   )
@@ -24,7 +25,7 @@ const Main = styled.button<TMain>`
   outline: none;
   width: fit-content;
   border: none;
-  padding: 7px 15px;
+  padding: 10px 20px;
   border-radius: 30px;
   font-family: "Poppins";
   cursor: pointer;

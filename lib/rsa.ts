@@ -8,7 +8,6 @@ export const encryptRSA = (text: string) => {
     {
       key: PUBLIC_KEY,
       padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
-      oaepHash: "sha256",
     },
     Buffer.from(text, "utf8")
   );
@@ -20,7 +19,6 @@ export const decryptRSA = (encryptedText: string) => {
     {
       key: PRIVATE_KEY,
       padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
-      oaepHash: "sha256",
     },
     Buffer.from(encryptedText, "base64")
   );

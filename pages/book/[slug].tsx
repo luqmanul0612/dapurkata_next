@@ -12,7 +12,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const res = await request<TBooksRes>(`${process.env.BASE_URL}/api/book`, { method: "POST" });
     const paths = res.data?.map((val) => ({ params: { slug: val.slug } }))
-    return { paths, fallback: false }
+    return { paths, fallback: true }
   } catch (error) {
     return { paths: [], fallback: true }
   }

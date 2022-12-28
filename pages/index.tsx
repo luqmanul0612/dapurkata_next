@@ -12,11 +12,12 @@ type TResBook = {
 }
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const res = await request<TResBook>(`${process.env.BASE_URL}/api/book`, { method: "POST" });
-  return {
-    props: { data: res.data },
-    revalidate: 1
-  };
+  try {
+    const res = await request<TResBook>(`${process.env.BASE_URL}/api/book`, { method: "POST" });
+    return { props: { data: res.data }, revalidate: 1 };
+  } catch (error) {
+    return { props: { data: [] }, revalidate: 1 };
+  }
 };
 
 type THome = {

@@ -8,18 +8,26 @@ import axios from "axios";
 type TBooksRes = { statusCode: string; data: TBook[] }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await axios<TBooksRes>({ method: "GET", url: `${process.env.BASE_URL}/api/book`, });
-  const paths = res.data.data.map((val) => ({ params: { slug: val.slug } }))
-  return { paths, fallback: false }
+  try {
+    const res = await axios<TBooksRes>({ method: "GET", url: `${process.env.BASE_URL}/api/book`, });
+    const paths = res.data.data.map((val) => ({ params: { slug: val.slug } }))
+    return { paths, fallback: false }
+  } catch (error) {
+    return { paths: [], fallback: false }
+  }
 }
 
 type TBookRes = { statusCode: string; data: TBook }
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const { params } = ctx;
-  const slug = params.slug;
-  const res = await axios<TBookRes>({ method: "GET", url: `${process.env.BASE_URL}/api/book`, data: { slug } });
-  return { props: { data: res.data.data }, revalidate: 1 };
+  try {
+    const { params } = ctx;
+    const slug = params!.slug;
+    const res = await axios<TBookRes>({ method: "GET", url: `${process.env.BASE_URL}/api/book`, data: { slug } });
+    return { props: { data: res.data?.data }, revalidate: 1 };
+  } catch (error) {
+    return { props: { data: {} }, revalidate: 1 };
+  }
 };
 
 type TBookPath = {
@@ -29,7 +37,7 @@ type TBookPath = {
 const BookPath: FC<TBookPath> = ({ data }) => {
   return (
     <>
-      <Head>
+      <Head key={data.id}>
         <title>{data.title}</title>
         <link rel="icon" href="/icons/dklogo.svg" />
       </Head>

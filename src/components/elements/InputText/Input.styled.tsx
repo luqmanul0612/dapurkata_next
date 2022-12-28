@@ -10,7 +10,6 @@ type TMain = {
 export const Main = styled.div<TMain>`
   display: flex;
   flex-direction: column;
-  font-family: ${({ theme }) => theme.fontFamily};
   width: ${({ width }) => width};
   > div.Input-wrapper {
     display: flex;

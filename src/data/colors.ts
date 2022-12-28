@@ -1,4 +1,3 @@
-import { TColors } from "../types/theme";
 
 export const colors: TColors = {
   primary: {

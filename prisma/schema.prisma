@@ -2,15 +2,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
-}
-
 // datasource db {
-//   provider = "mysql"
-//   url      = env("DATABASE_URL")
+//   provider = "sqlite"
+//   url      = "file:./dev.db"
 // }
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
 
 model User {
   id        String   @id @default(cuid()) @map("user_id")
@@ -30,7 +30,7 @@ model Book {
   price         Int
   stock         Int
   publisher     String
-  description   String?
+  description   String?  @db.VarChar(2000)
   coverUrl      String?  @map("cover_url")
   printType     String   @map("print_type")
   numberOfPages Int      @map("number_of_pages")

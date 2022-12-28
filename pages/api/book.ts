@@ -53,7 +53,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       try {
         await updateBookSchema.validate(req.body);
         const findBook = await prisma.book.findUnique({ where: { id: req.body.bookId } })
-        let pathFile = undefined;
+        let pathFile: string | undefined = undefined;
         if (req.body.cover) {
           saveFile({ dir: "/public/uploads/books", file: req.body.cover, name: `${new Date().getTime()}-${findBook?.title}` as string, limit: 1048576 })
             .then(({ pathFile: path }) => pathFile = path)
@@ -71,7 +71,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             printType: req.body.status || undefined,
             numberOfPages: req.body.numberOfPages || undefined,
             isbn: req.body.isbn || undefined,
-            slug: stringPath(`${req.body.publisher || findBook.publisher}-${req.body.title || findBook.title}`)
+            slug: stringPath(`${req.body.publisher || findBook?.publisher}-${req.body.title || findBook?.title}`)
           }
         })
         res.json({ status: "200", data: updateBook })

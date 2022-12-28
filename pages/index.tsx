@@ -4,14 +4,17 @@ import { FC } from "react";
 import Homepage from "../src/containers/Homepage";
 import { TBook } from "../src/types/book";
 import axios from "axios";
+import request from "../src/hooks/request";
+
+type TResBook = {
+  statusCode: string;
+  data: TBook[]
+}
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const res = await axios({
-    method: "GET",
-    url: `${process.env.BASE_URL}/api/book`,
-  });
+  const res = await request<TResBook>(`${process.env.BASE_URL}/api/book`, { method: "POST" });
   return {
-    props: { data: res.data.data },
+    props: { data: res.data },
     revalidate: 1
   };
 };

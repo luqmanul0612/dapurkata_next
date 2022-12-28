@@ -4,12 +4,13 @@ import { FC } from "react";
 import Book from "../../src/containers/Book";
 import { TBook } from "../../src/types/book";
 import axios from "axios";
+import request from "../../src/hooks/request";
 
 type TBooksRes = { statusCode: string; data: TBook[] }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await axios<TBooksRes>({ method: "GET", url: `${process.env.BASE_URL}/api/book`, });
-  const paths = res.data.data.map((val) => ({ params: { slug: val.slug } }))
+  const res = await request<TBooksRes>(`${process.env.BASE_URL}/api/book`, { method: "POST" });
+  const paths = res.data?.map((val) => ({ params: { slug: val.slug } }))
   return { paths, fallback: false }
 }
 
@@ -18,8 +19,16 @@ type TBookRes = { statusCode: string; data: TBook }
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { params } = ctx;
   const slug = params!.slug;
-  const res = await axios<TBookRes>({ method: "GET", url: `${process.env.BASE_URL}/api/book`, data: { slug } });
-  return { props: { data: res.data?.data }, revalidate: 1 };
+  const res = await request<TBookRes>(
+    `${process.env.BASE_URL}/api/book`,
+    {
+      method: "POST",
+      body: JSON.stringify({ slug }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+  return { props: { data: res.data }, revalidate: 1 };
 };
 
 type TBookPath = {

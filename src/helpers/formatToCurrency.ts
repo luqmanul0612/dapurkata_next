@@ -1,4 +1,4 @@
-export const formatToCurrency = (amount, frac = 2) => {
+export const formatToCurrency = (amount: number, frac = 2) => {
   const options = {
     minimumFractionDigits: frac,
     maximumFractionDigits: frac

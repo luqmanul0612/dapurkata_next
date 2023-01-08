@@ -45,7 +45,7 @@ const Book: FC<TBookContainer> = ({ data, loading }) => {
           </Loading>
         </Fade>
         {!loading && data && (
-          <div>
+          <div className="detail-wrapper">
             <BookInfo>
               <div className="cover">
                 <div>
@@ -109,7 +109,13 @@ const Main = styled.div`
     background: rgb(255,255,255);
     border-radius: 8px;
     padding: 30px;
+    padding-bottom: 70px;
     position: relative;
+    > div.detail-wrapper{
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
   }
 `
 

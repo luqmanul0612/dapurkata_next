@@ -24,7 +24,6 @@ const BookList: FC<TBookList> = () => {
     url: "/api/book"
   })
 
-
   const onClickBook = (slug: string) => {
     router.push({
       pathname: '/book/[slug]',

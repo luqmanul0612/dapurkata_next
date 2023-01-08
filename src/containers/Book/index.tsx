@@ -1,34 +1,37 @@
+import { Fade } from "@mui/material"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { FC } from "react"
 import styled from "styled-components"
 import BookList from "../../components/BookList"
 import Button from "../../components/elements/Button/Button"
+import { FacebookCircularProgress } from "../../components/Loading/LoadingWrapper"
 import { formatToCurrency } from "../../helpers/formatToCurrency"
 import { TBook } from "../../types/book"
 
 type TBookContainer = {
-  data: TBook
+  data: TBook;
+  loading: boolean
 }
 
-const Book: FC<TBookContainer> = ({ data }) => {
+const Book: FC<TBookContainer> = ({ data, loading }) => {
   const router = useRouter()
   const detail = [
     {
       label: "Jumlah Halaman",
-      value: data.numberOfPages
+      value: data?.numberOfPages
     },
     {
       label: "ISBN",
-      value: data.isbn
+      value: data?.isbn
     },
     {
       label: "Penerbit",
-      value: data.publisher
+      value: data?.publisher
     },
     {
       label: "Stok",
-      value: data.stock
+      value: data?.stock
     }
   ]
 
@@ -36,45 +39,54 @@ const Book: FC<TBookContainer> = ({ data }) => {
     <Main>
       <div className="content">
         <Back onClick={() => router.push({ pathname: "/", hash: "#book-list" })}>{"< Kembali"}</Back>
-        <BookInfo>
-          <div className="cover">
-            <div>
-              <Image
-                src={data.Image.secureUrl}
-                fill
-                alt="cover"
-              />
-            </div>
-          </div>
-          <div className="info">
-            <div className="section-1">
-              <p className="title">{data.title}</p>
-              <p className="author">{data.authorName}</p>
-              <div className="additional">
-                <div>{data.printType}</div>
+        <Fade in={loading} unmountOnExit>
+          <Loading>
+            <FacebookCircularProgress size={60} thickness={5} />
+          </Loading>
+        </Fade>
+        {!loading && data && (
+          <div>
+            <BookInfo>
+              <div className="cover">
+                <div>
+                  <Image
+                    src={data?.Image.secureUrl}
+                    fill
+                    alt="cover"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="section-2">
-              <p className="price">{`Rp ${formatToCurrency(data.price, 0)}`}</p>
-              <Button type="button" onClick={() => window.open("https://wa.link/i4bf6x")} label="Beli Sekarang" variant="primary" />
-            </div>
-          </div>
-        </BookInfo>
-        <Description>
-          <p className="title">Deskripsi Buku</p>
-          <p className="value">{data.description}</p>
-        </Description>
-        <Detail>
-          <p className="title">Detail</p>
-          <div className="item-wrapper">
-            {detail.map((val) => (
-              <div key={val.label}>
-                <p className="label">{val.label}</p>
-                <p className="value">{val.value}</p>
+              <div className="info">
+                <div className="section-1">
+                  <p className="title">{data.title}</p>
+                  <p className="author">{data.authorName}</p>
+                  <div className="additional">
+                    <div>{data.printType}</div>
+                  </div>
+                </div>
+                <div className="section-2">
+                  <p className="price">{`Rp ${formatToCurrency(data.price, 0)}`}</p>
+                  <Button type="button" onClick={() => window.open("https://wa.link/i4bf6x")} label="Beli Sekarang" variant="primary" />
+                </div>
               </div>
-            ))}
+            </BookInfo>
+            <Description>
+              <p className="title">Deskripsi Buku</p>
+              <p className="value">{data.description}</p>
+            </Description>
+            <Detail>
+              <p className="title">Detail</p>
+              <div className="item-wrapper">
+                {detail.map((val) => (
+                  <div key={val.label}>
+                    <p className="label">{val.label}</p>
+                    <p className="value">{val.value}</p>
+                  </div>
+                ))}
+              </div>
+            </Detail>
           </div>
-        </Detail>
+        )}
       </div>
     </Main>
   )
@@ -97,7 +109,20 @@ const Main = styled.div`
     background: rgb(255,255,255);
     border-radius: 8px;
     padding: 30px;
+    position: relative;
   }
+`
+
+const Loading = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 500px;
+  left: 0;
+  position: absolute;
+  background: white;
+  z-index: 2;
 `
 
 const BookInfo = styled.div`
@@ -167,9 +192,6 @@ const BookInfo = styled.div`
         margin: 0;
         line-height: 1.3;
         color: #ff06a4;
-      }
-      > button {
-        border-radius: 3px;
       }
     }
   }

@@ -8,7 +8,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import styled from 'styled-components';
 
-function FacebookCircularProgress(props: CircularProgressProps) {
+export const FacebookCircularProgress = (props: CircularProgressProps) => {
   return (
     <Box sx={{ position: 'relative' }}>
       <CircularProgress
@@ -16,8 +16,8 @@ function FacebookCircularProgress(props: CircularProgressProps) {
         sx={{
           color: "#d2cde4"
         }}
-        size={70}
-        thickness={5}
+        size={props.size}
+        thickness={props.thickness}
         {...props}
         value={100}
       />
@@ -33,8 +33,8 @@ function FacebookCircularProgress(props: CircularProgressProps) {
             strokeLinecap: 'round',
           },
         }}
-        size={70}
-        thickness={5}
+        size={props.size}
+        thickness={props.thickness}
         {...props}
       />
     </Box>
@@ -45,7 +45,7 @@ const LoadingWrapper = ({ open = false }) => {
   return (
     <StyledModal slots={{ backdrop: Backdrop }} open={open}>
       <div>
-        <FacebookCircularProgress />
+        <FacebookCircularProgress size={70} thickness={5}/>
       </div>
     </StyledModal>
   );

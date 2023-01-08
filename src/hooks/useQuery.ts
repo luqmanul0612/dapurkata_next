@@ -7,16 +7,16 @@ const initHeaders = {
   "Access-Control-Allow-Credentials": true,
 };
 
-type TUseQuery = (props: {
+type TUseQueryProps = {
   url: string;
   method: "POST" | "PUT" | "DELETE" | "GET" | "PATCH";
   skip?: boolean;
   headers?: { [name: string]: string | boolean };
   body?: { [name: string]: string };
   refetchDelay?: number;
-}) => { data: any, error: any, loading: boolean, refetch: () => void }
+}
 
-const useQuery: TUseQuery = ({ url, method, body: customBody = {}, headers: customHeaders = {}, skip, refetchDelay = 0 }) => {
+const useQuery = <TResponse>({ url, method, body: customBody = {}, headers: customHeaders = {}, skip, refetchDelay = 0 }: TUseQueryProps) => {
   const [data, setData] = useState(null);
   const [isDirty, setIsDirty] = useState(false);
   const [error, setError] = useState(null);
@@ -69,7 +69,7 @@ const useQuery: TUseQuery = ({ url, method, body: customBody = {}, headers: cust
     };
   }, [skip, body, headers]);
 
-  return { data, error, loading, refetch };
+  return { data: data as TResponse, error, loading, refetch };
 };
 
 export default useQuery

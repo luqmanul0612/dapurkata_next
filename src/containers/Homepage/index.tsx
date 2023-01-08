@@ -7,10 +7,9 @@ import Button from "../../components/elements/Button/Button"
 import { TBook } from "../../types/book"
 
 type THomepage = {
-  data: TBook[]
 }
 
-const Homepage: FC<THomepage> = ({ data }) => {
+const Homepage: FC<THomepage> = () => {
   const router = useRouter()
   return (
     <>
@@ -27,7 +26,7 @@ const Homepage: FC<THomepage> = ({ data }) => {
           </div>
         </div>
       </Main>
-      <BookList data={data} />
+      <BookList />
     </>
   )
 }

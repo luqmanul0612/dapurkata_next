@@ -13,7 +13,8 @@ export const Button = styled.button<ButtonProps>`
   cursor: pointer;
   font-weight: 600;
   font-size: 15px;
-  padding: 10px 15.83px;
+  padding: 12px 16px;
+  width: fit-content;
 
   &.primary {
     background-color: ${({ theme }) => theme.colors?.primary?.default};

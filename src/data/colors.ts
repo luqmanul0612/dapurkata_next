@@ -1,10 +1,10 @@
 
 export const colors: TColors = {
   primary: {
-    dark: "#1a237e",
-    hard: "#283593",
-    default: "#303f9f",
-    medium: "#5c6bc0",
+    dark: "#283593",
+    hard: "#3949ab",
+    default: "#5c6bc0",
+    medium: "#7986cb",
     Soft: "#9fa8da",
     ultrasoft: "#e8eaf6"
   },

@@ -1,56 +1,40 @@
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { FC } from "react";
 import Book from "../../src/containers/Book";
 import { TBook } from "../../src/types/book";
-import axios from "axios";
-import request from "../../src/hooks/request";
+import useQuery from "../../src/hooks/useQuery";
 
-type TBooksRes = { statusCode: string; data: TBook[] }
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  try {
-    const res = await request<TBooksRes>(`${process.env.BASE_URL}/api/book`, { method: "POST" });
-    const paths = res.data?.map((val) => ({ params: { slug: val.slug } }))
-    return { paths, fallback: true }
-  } catch (error) {
-    return { paths: [], fallback: true }
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { params } = ctx;
+  const slug = params!.slug;
+  return {
+    props: { slug }, // will be passed to the page component as props
   }
 }
 
-type TBookRes = { statusCode: string; data: TBook }
-
-export const getStaticProps: GetStaticProps = async (ctx) => {
-  const { params } = ctx;
-  const slug = params!.slug;
-  try {
-    const res = await request<TBookRes>(
-      `${process.env.BASE_URL}/api/book`,
-      {
-        method: "POST",
-        body: JSON.stringify({ slug }),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
-    return { props: { data: res.data }, revalidate: 1 };
-  } catch (error) {
-    return { props: { data: {} }, revalidate: 1 };
-  }
-};
-
 type TBookPath = {
-  data: TBook;
+  slug: string;
 };
 
-const BookPath: FC<TBookPath> = ({ data }) => {
+type TResBook = {
+  statusCode: string;
+  data: TBook
+}
+
+const BookPath: FC<TBookPath> = ({ slug }) => {
+  const { data, error, loading } = useQuery<TResBook>({
+    method: "POST",
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/book`,
+    body: { slug: slug as string }
+  })
   return (
     <>
-      <Head key={data.id}>
-        <title>{data.title}</title>
+      <Head key={data?.data?.id}>
+        <title>{data?.data?.title || "Book"}</title>
         <link rel="icon" href="/icons/dklogo.svg" />
       </Head>
-      <Book data={data} />
+      <Book data={data?.data} loading={loading} />
     </>
   );
 };

@@ -1,16 +1,30 @@
+import { Fade } from "@mui/material"
 import { useRouter } from "next/router"
 import { FC, useState } from "react"
 import styled from "styled-components"
+import useQuery from "../../hooks/useQuery"
 import { TBook } from "../../types/book"
 import BookCard from "../BookCard"
+import { FacebookCircularProgress } from "../Loading/LoadingWrapper"
 
 type TBookList = {
+}
+
+type TResBook = {
+  statusCode: string;
   data: TBook[]
 }
 
-const BookList: FC<TBookList> = ({ data }) => {
+const BookList: FC<TBookList> = () => {
   const router = useRouter()
   const [search, setSearch] = useState("")
+
+  const { data, error, loading } = useQuery<TResBook>({
+    method: "POST",
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/book`
+  })
+
+  console.log({ data })
 
   const onClickBook = (slug: string) => {
     router.push({
@@ -19,34 +33,39 @@ const BookList: FC<TBookList> = ({ data }) => {
     })
   }
 
-  const filterBook = data?.filter((val) => `${val.title.toLowerCase()} ${val.authorName.toLowerCase()}`.includes(search.toLowerCase()))
+  const filterBook = data?.data?.filter((val) => `${val.title.toLowerCase()} ${val.authorName.toLowerCase()}`.includes(search.toLowerCase()))
 
   return (
-      <Main id="book-list">
-        <p className="title">Daftar Buku</p>
-        <Content>
-          <div className="search">
-            <div className="input-wrapper">
-              <SearchIcon />
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Cari berdasarkan judul/penulis"
-              />
-            </div>
+    <Main id="book-list">
+      <p className="title">Daftar Buku</p>
+      <Content>
+        <div className="search">
+          <div className="input-wrapper">
+            <SearchIcon />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Cari berdasarkan judul/penulis"
+            />
           </div>
-          {filterBook.length > 0 && (
-            <div className="books-wrapper">
-              {filterBook.map((book) => (
-                <div key={book.id}>
-                  <BookCard data={book} onClick={() => onClickBook(book.slug)} />
-                </div>
-              ))}
-            </div>
-          )}
-          {filterBook.length === 0 && <NoData>Buku tidak ditemukan</NoData>}
-        </Content>
-      </Main>
+        </div>
+        <Fade in={!loading && filterBook?.length > 0} unmountOnExit>
+          <div className="books-wrapper">
+            {filterBook?.map((book) => (
+              <div key={book.id}>
+                <BookCard data={book} onClick={() => onClickBook(book.slug)} />
+              </div>
+            ))}
+          </div>
+        </Fade>
+        {!loading && filterBook?.length === 0 && <NoData>Buku tidak ditemukan</NoData>}
+        <Fade in={loading} unmountOnExit>
+          <Loading>
+            <FacebookCircularProgress size={60} thickness={5} />
+          </Loading>
+        </Fade>
+      </Content>
+    </Main>
   )
 }
 
@@ -67,10 +86,21 @@ const Main = styled.div`
   }
 `
 
+const Loading = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 500px;
+  position: absolute;
+  background: ${({ theme }) => theme.colors?.primary?.ultrasoft};
+`
+
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 400px;
+  position: relative;
   gap: 40px;
   > div.search {
     display: flex;

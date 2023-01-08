@@ -21,7 +21,7 @@ const BookList: FC<TBookList> = () => {
 
   const { data, error, loading } = useQuery<TResBook>({
     method: "POST",
-    url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/book`
+    url: "/api/book"
   })
 
   console.log({ data })

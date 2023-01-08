@@ -24,7 +24,6 @@ const BookList: FC<TBookList> = () => {
     url: "/api/book"
   })
 
-  console.log({ data })
 
   const onClickBook = (slug: string) => {
     router.push({
@@ -91,7 +90,7 @@ const Loading = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 500px;
+  height: 300px;
   position: absolute;
   background: ${({ theme }) => theme.colors?.primary?.ultrasoft};
 `

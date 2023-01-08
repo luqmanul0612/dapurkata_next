@@ -15,12 +15,9 @@ const BookCard: FC<TBookCard> = ({ data, onClick }) => {
     <Main onClick={onClick}>
       <div className="cover">
         <Image
-          src={data.coverUrl}
+          src={data.Image.secureUrl}
           fill
           alt="cover"
-          sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
         />
       </div>
       <div className="detail">

@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { FC } from "react"
 import styled from "styled-components"
 import BookList from "../../components/BookList"
-import Button from "../../components/elements/Button"
+import Button from "../../components/elements/Button/Button"
 import { formatToCurrency } from "../../helpers/formatToCurrency"
 import { TBook } from "../../types/book"
 
@@ -40,7 +40,7 @@ const Book: FC<TBookContainer> = ({ data }) => {
           <div className="cover">
             <div>
               <Image
-                src={data.coverUrl}
+                src={data.Image.secureUrl}
                 fill
                 alt="cover"
               />
@@ -56,7 +56,7 @@ const Book: FC<TBookContainer> = ({ data }) => {
             </div>
             <div className="section-2">
               <p className="price">{`Rp ${formatToCurrency(data.price, 0)}`}</p>
-              <Button type="button" onClick={() => window.open("https://wa.link/i4bf6x")} label="Beli Sekarang" variant="contained" />
+              <Button type="button" onClick={() => window.open("https://wa.link/i4bf6x")} label="Beli Sekarang" variant="primary" />
             </div>
           </div>
         </BookInfo>

@@ -7,7 +7,7 @@ export type TBook = {
   stock: number;
   publisher: string;
   description: string;
-  coverUrl: string;
+  Image: { url: string; secureUrl: string; }
   printType: string;
   isbn: string;
   slug: string;

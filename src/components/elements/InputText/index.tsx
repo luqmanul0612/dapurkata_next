@@ -30,7 +30,7 @@ const InputText: React.FC<InputProps & TInputText> = (props) => {
       <div className="Input-wrapper">
         <label className="label" htmlFor={props.id}>{props.label}</label>
         <El.InputText
-          id={props.id}
+          id={props.id || props.label}
           ref={ref}
           type={props.type}
           value={value}
@@ -55,7 +55,6 @@ InputText.defaultProps = {
   className: "",
   onChange: () => { },
   width: "300px",
-  id: "input",
   autoComplete: "off",
   placeholder: "Placeholder",
   value: "",

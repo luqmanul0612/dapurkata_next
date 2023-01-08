@@ -3,36 +3,41 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id        String   @id @default(cuid()) @map("user_id")
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   username  String   @unique
   name      String
   password  String
-  createdAt DateTime @default(now()) @map("create_at")
-  updatedAt DateTime @updatedAt @map("update_at")
-
-  @@map("users")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Book {
-  id            Int      @id @default(autoincrement()) @map("book_id")
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
   title         String
-  authorName    String   @map("author_name")
+  authorName    String
   price         Int
   stock         Int
   publisher     String
-  description   String?  @db.VarChar(2000)
-  coverUrl      String?  @map("cover_url")
-  printType     String   @map("print_type")
-  numberOfPages Int      @map("number_of_pages")
+  description   String?
+  printType     String
+  numberOfPages Int
   isbn          String
   slug          String   @unique
-  createdAt     DateTime @default(now()) @map("create_at")
-  updatedAt     DateTime @updatedAt @map("update_at")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  Image         Image?
+}
 
-  @@map("books")
+model Image {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  publicId  String @unique
+  url       String
+  secureUrl String
+  book      Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  bookId    String @unique @db.ObjectId
 }

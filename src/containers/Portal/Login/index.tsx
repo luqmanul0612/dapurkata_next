@@ -1,18 +1,17 @@
-import React, { useState } from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from "react-hook-form";
-import Button from "../../../components/elements/Button"
+import Button from "../../../components/elements/Button/Button"
 import InputText from "../../../components/elements/InputText"
-import { useQuery } from "../../../hooks/useQuery"
 import { defaultValues, validationSchema } from "./validationSchema";
 import crypto from "crypto"
-
+import Router from "next/router"
+import LoadingWrapper from "../../../components/Loading/LoadingWrapper";
+import useMutation from "../../../hooks/useMutation";
+import { Fade } from "@mui/material";
 
 const Login: React.FC = () => {
-  const [startFetch, setStartFetch] = useState(false)
-  const [body, setBody] = useState({})
-
   const PUBLIC_KEY = process.env.NEXT_PUBLIC_PUBLIC_KEY as string
 
   const encryptRSA = (text: string) => {
@@ -26,14 +25,22 @@ const Login: React.FC = () => {
     return encrypted.toString("base64");
   }
 
+  useEffect(() => {
+    sessionStorage.removeItem("token")
+  }, [])
+  
 
-  const { data, error, loading } = useQuery({
+  const { data, error, loading, mutation } = useMutation({
     method: "POST",
     url: "/api/user/login",
-    skip: !startFetch,
-    body
   })
 
+  React.useEffect(() => {
+    if (data) {
+      sessionStorage.setItem("token", data?.token)
+      Router.push("/portal")
+    }
+  }, [data])
 
   const { handleSubmit, watch, control, formState, setValue } = useForm({
     mode: "all",
@@ -45,52 +52,60 @@ const Login: React.FC = () => {
   const { isValid } = formState;
 
   const onSubmit = (values: any) => {
-    setBody({
-      username: values.username,
-      password: encryptRSA(values.password)
+    mutation({
+      body: {
+        username: values.username,
+        password: encryptRSA(values.password)
+      }
     })
-    setStartFetch(true)
   }
 
   return (
-    <Main>
-      <p className="title">LOGIN PORTAL</p>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <div className="input-wrapper">
-          <Controller
-            name="username"
-            control={control}
-            render={({ field: { onChange, value }, fieldState: { error } }) => (
-              <InputText
-                type="text"
-                width="100%"
-                label="Username"
-                placeholder="Masukan username anda"
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
-              />
-            )}
-          />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field: { onChange, value }, fieldState: { error } }) => (
-              <InputText
-                type="password"
-                width="100%"
-                label="Password"
-                placeholder="Masukan password anda"
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
-              />
-            )}
-          />
-        </div>
-        <div className="button-wrapper">
-          <Button label="Masuk" variant="contained" type="submit" />
-        </div>
-      </Form>
+    <Fade in>
+      <Main>
+      <LoadingWrapper open={loading} />
+      <div>
+        <p className="title">LOGIN</p>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <div className="input-wrapper">
+            <Controller
+              name="username"
+              control={control}
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <InputText
+                  type="text"
+                  width="100%"
+                  label="Username"
+                  placeholder="Masukan username anda"
+                  value={value}
+                  autoComplete="off"
+                  onChange={(e) => onChange(e.target.value)}
+                />
+              )}
+            />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <InputText
+                  type="password"
+                  width="100%"
+                  label="Password"
+                  placeholder="Masukan password anda"
+                  value={value}
+                  autoComplete="off"
+                  onChange={(e) => onChange(e.target.value)}
+                />
+              )}
+            />
+          </div>
+          <div className="button-wrapper">
+            <Button label="Masuk" variant="primary" type="submit" disabled={!isValid} />
+          </div>
+        </Form>
+      </div>
     </Main>
+    </Fade>
   )
 }
 
@@ -99,13 +114,26 @@ export default Login
 const Main = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 220px);
+  width: 100%;
+  min-height: 100vh;
   align-items: center;
   justify-content: center;
-  >p.title {
-    font-size: 30px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.colors?.text?.dark};
+  background: ${({ theme }) => theme.colors?.primary?.dark};
+  > div {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    padding: 40px;
+    padding-bottom: 30px;
+    gap: 40px;
+    background: white;
+    >p.title {
+      font-size: 30px;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1;
+      color: ${({ theme }) => theme.colors?.text?.dark};
+    }
   }
 `
 
@@ -118,7 +146,7 @@ const Form = styled.form`
   > div.input-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
   }
   > div.button-wrapper {
     display: flex;

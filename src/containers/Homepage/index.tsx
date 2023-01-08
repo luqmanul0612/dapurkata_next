@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { FC } from "react"
 import styled from "styled-components"
 import BookList from "../../components/BookList"
-import Button from "../../components/elements/Button"
+import Button from "../../components/elements/Button/Button"
 import { TBook } from "../../types/book"
 
 type THomepage = {
@@ -22,8 +22,8 @@ const Homepage: FC<THomepage> = ({ data }) => {
           </div>
           <Image src="/img/banner.svg" width={400} height={300} alt="pic" />
           <div className="button-wrapper">
-            <Button type="button" variant="contained" label="Pesan Sekarang" onClick={() => window.open("https://wa.link/i4bf6x")} />
-            <Button type="button" variant="outline" label="Daftar Buku" onClick={() => router.push({ hash: "#book-list" })} />
+            <Button type="button" variant="primary" label="Pesan Sekarang" onClick={() => window.open("https://wa.link/i4bf6x")} />
+            <Button type="button" variant="secondary" label="Daftar Buku" onClick={() => router.push({ hash: "#book-list" })} />
           </div>
         </div>
       </Main>

@@ -3,7 +3,7 @@ import axios from "axios";
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 const initHeaders = {
-  "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_BASE_URL as string,
+  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
 };
 

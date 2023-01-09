@@ -1,15 +1,15 @@
 import Head from "next/head";
 import React from "react";
-import PortalComponent from "../../../src/containers/Portal";
+import BookComponent from "../../../src/containers/Portal/Master/Book"
 
 const Book: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Portal</title>
+        <title>Portal - Book</title>
         <link rel="icon" href="/icons/dklogo.svg" />
       </Head>
-      aa
+      <BookComponent />
     </>
   );
 };

@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import ButtonComp from '../elements/Button'
 import * as yup from "yup"
 import InputText from '../elements/Input/Input'
+import FileUploader from '../elements/FileUploader/FileUploader'
 
 type TFormAdd = {
   title: string;
@@ -27,7 +28,14 @@ type TPopupDelete = {
 
 const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
 
-  const { handleSubmit, watch, control, formState, setValue } = useForm<TFormAdd>({
+  React.useEffect(() => {
+    if (open) {
+      reset()
+    }
+  }, [open])
+
+
+  const { handleSubmit, watch, control, formState, setValue, reset } = useForm<TFormAdd>({
     mode: "all",
     reValidateMode: "onChange",
     resolver: yupResolver(validationSchema),
@@ -204,6 +212,19 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
                     )}
                   />
                 </InputGroup>
+                <CoverInput>
+                  <p>Cover File</p>
+                  <Controller
+                    name="numberOfPages"
+                    control={control}
+                    render={({ field: { onChange, value }, fieldState: { error } }) => (
+                      <FileUploader
+                        width="99.9%"
+                        onChange={(e) => onChange(e)}
+                      />
+                    )}
+                  />
+                </CoverInput>
               </div>
             </Form>
           </div>
@@ -232,8 +253,16 @@ const validationSchema =
     isbn: yup.string().required("Required")
   });
 
-
 const defaultValues = {
+  title: "",
+  authorName: "",
+  price: "",
+  stock: "",
+  publisher: "",
+  description: "",
+  printType: "",
+  numberOfPages: "",
+  isbn: ""
 };
 
 const CloseIcon = () => (<svg viewBox="0 0 512 512"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32" d="M368 368L144 144M368 144L144 368" /></svg>)
@@ -342,4 +371,17 @@ const Form = styled.form`
 const InputGroup = styled.div`
   display: flex;
   gap: 15px;
+`
+
+const CoverInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  > p {
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1;
+    color: ${({ theme }) => theme?.colors?.text?.darkGrey}
+  }
 `

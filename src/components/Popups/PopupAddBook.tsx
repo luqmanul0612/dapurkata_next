@@ -256,12 +256,12 @@ const validationSchema =
 const defaultValues = {
   title: "",
   authorName: "",
-  price: "",
-  stock: "",
+  price: undefined,
+  stock: undefined,
   publisher: "",
   description: "",
   printType: "",
-  numberOfPages: "",
+  numberOfPages: undefined,
   isbn: ""
 };
 

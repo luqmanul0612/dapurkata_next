@@ -164,16 +164,15 @@ const Main = styled.div`
   .MuiTableRow-root.MuiTableRow-hover{
     transition: background 0.2s ease;
     :hover{
-      background: #fff2f2;
+      background: ${({theme})=>theme?.colors?.primary?.ultrasoft};
     }
   }
 `;
 
 const StyledTableCell = styled(TableCell)`
   &.MuiTableCell-root.MuiTableCell-head{
-    font-size: 10px;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 13px;
     color: #727C98;
     padding: 15px 20px;
     padding-right: ${({ paddingRight }) => paddingRight !== undefined ? paddingRight : "20px"};

@@ -2,8 +2,8 @@ import React, { useEffect } from "react"
 import styled from "styled-components"
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from "react-hook-form";
-import Button from "../../../components/elements/Button/Button"
-import InputText from "../../../components/elements/InputText"
+import Button from "../../../components/elements/Button"
+import InputText from "../../../components/elements/Input/Input"
 import { defaultValues, validationSchema } from "./validationSchema";
 import crypto from "crypto"
 import Router from "next/router"
@@ -100,7 +100,7 @@ const Login: React.FC = () => {
             />
           </div>
           <div className="button-wrapper">
-            <Button label="Masuk" variant="primary" type="submit" disabled={!isValid} />
+            <Button label="Login" variant="contained" type="submit" disabled={!isValid} />
           </div>
         </Form>
       </div>

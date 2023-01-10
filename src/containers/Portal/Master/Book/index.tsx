@@ -1,6 +1,8 @@
 import { Button } from "@mui/material"
 import React, { useMemo, useState } from "react"
 import styled from "styled-components"
+import ButtonComp from "../../../../components/elements/Button"
+import PopupAddBook from "../../../../components/Popups/PopupAddBook"
 import PopupDelete from "../../../../components/Popups/PopupDelete"
 import TableComponent from "../../../../components/Tables/TableComponent"
 import useQuery from "../../../../hooks/useQuery"
@@ -8,6 +10,7 @@ import { TBook } from "../../../../types/book"
 
 const Book: React.FC = () => {
   const [popupDelete, setPopupDelete] = useState(false)
+  const [popupAdd, setPopupAdd] = useState(false)
   const [deleteData, setDeleteData] = useState<{ id: string; title: string; }>({ id: "", title: "" })
   type TResBook = {
     statusCode: string;
@@ -52,10 +55,14 @@ const Book: React.FC = () => {
   return (
     <Main>
       <PopupDelete open={popupDelete} onClickClose={() => setPopupDelete(false)} data={deleteData} />
+      <PopupAddBook open={popupAdd} onClickClose={() => setPopupAdd(false)} data={deleteData} />
       <p className="title">Portal - Book</p>
-      <div className="content">
+      <Content>
+        <div className="action">
+          <ButtonComp label="ADD" startIcon={<PlusIcon />} onClick={() => setPopupAdd(true)} />
+        </div>
         <TableComponent dataTable={dataTable} loading={loading} checkbox maxHeight="600px" />
-      </div>
+      </Content>
     </Main>
   )
 }
@@ -63,6 +70,7 @@ const Book: React.FC = () => {
 export default Book
 
 const DeleteIcon = () => (<svg viewBox="0 0 512 512"><rect x="32" y="48" width="448" height="80" rx="32" ry="32" /><path d="M74.45 160a8 8 0 00-8 8.83l26.31 252.56a1.5 1.5 0 000 .22A48 48 0 00140.45 464h231.09a48 48 0 0047.67-42.39v-.21l26.27-252.57a8 8 0 00-8-8.83zm248.86 180.69a16 16 0 11-22.63 22.62L256 318.63l-44.69 44.68a16 16 0 01-22.63-22.62L233.37 296l-44.69-44.69a16 16 0 0122.63-22.62L256 273.37l44.68-44.68a16 16 0 0122.63 22.62L278.62 296z" /></svg>)
+const PlusIcon = () => (<svg viewBox="0 0 512 512"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="54" d="M256 112v288M400 256H112" /></svg>)
 
 const Main = styled.div`
   display: flex;
@@ -73,14 +81,6 @@ const Main = styled.div`
     font-size: 20px;
     font-weight: 600;
     color: ${({ theme }) => theme.colors?.text?.dark};
-  }
-  > div.content {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    padding: 30px 20px;
-    box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
-    border-radius: 15px;
   }
 `
 
@@ -108,3 +108,20 @@ const Action = styled.div`
     }
   }
 `;
+
+const Content = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 30px 20px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+  border-radius: 15px;
+  gap: 20px;
+  > div.action {
+    display: flex;
+  }
+  
+  .MuiButton-startIcon {
+    height: 17px;
+  }
+`

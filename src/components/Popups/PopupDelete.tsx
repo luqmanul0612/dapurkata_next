@@ -1,6 +1,7 @@
 import { Backdrop, Button, Fade, Modal } from '@mui/material';
 import React, { FC } from 'react';
 import styled from 'styled-components';
+import ButtonComp from '../elements/Button';
 
 type TPopupDelete = {
   open: boolean;
@@ -16,14 +17,14 @@ const PopupDelete: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
     >
       <Fade in={open} unmountOnExit>
         <ContentWrapper>
-          <div className="head"><p>Delete Confirmation</p><Button onClick={onClickClose}><CloseIcon /></Button></div>
+          <div className="head"><p>Delete Confirmation</p><Button color="error" onClick={onClickClose}><CloseIcon /></Button></div>
           <div className="content">
             <div><p>ID</p><p>{data?.id || "-"}</p></div>
             <div><p>Title</p><p>{data?.title || "-"}</p></div>
           </div>
           <div className="footer">
-            <Button variant="contained" onClick={onClickClose}>Delete</Button>
-            <Button variant="outlined" onClick={onClickClose}>Cancel</Button>
+            <ButtonComp label="Delete" className="delete" variant="contained" color="error" onClick={onClickClose} />
+            <ButtonComp label="Cancel" variant="outlined" onClick={onClickClose} />
           </div>
         </ContentWrapper>
       </Fade>
@@ -69,7 +70,7 @@ const ContentWrapper = styled.div`
       font-weight: 500;
       margin: 0;
     }
-    >button{
+    .MuiButton-root{
       padding: 2px;
       border-radius: 100%;
       min-width: fit-content;
@@ -88,7 +89,7 @@ const ContentWrapper = styled.div`
     flex-direction: column;
     height: 100%;
     gap: 20px;
-    background: ${({theme})=>theme?.colors?.primary?.ultrasoft};
+    background: ${({ theme }) => theme?.colors?.primary?.ultrasoft};
     border-radius: 5px;
     padding: 10px 20px;
     margin: 0 10px;
@@ -117,37 +118,12 @@ const ContentWrapper = styled.div`
     width: 100%;
     padding: 15px;
     gap: 10px;
-    & .MuiButton-root:nth-child(1) {
+    .MuiButton-root.delete {
       width: fit-content;
+      background: ${({theme})=>theme?.colors?.red?.["06"]};
     }
-    & .MuiButton-root:nth-child(2) {
+    .MuiButton-root {
       width: fit-content;
     }
   }
-`;
-
-const IconWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
-  gap: 10px;
-  > p {
-    font-weight: 600;
-    font-size: 18px;
-    color: #970000;
-    margin: 0;
-    line-height: 1;
-  }
-`;
-
-const Description = styled.p`
-  font-weight: 400;
-  font-size: 13px;  
-  color: #727C98;
-  margin: 0;
-  margin-top: 20px;
-  line-height: 2;
-  text-align: center;
 `;

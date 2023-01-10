@@ -1,9 +1,9 @@
 import React from "react"
-import { ThemeCtx } from "../../../contexts/ThemeCtx"
-import { InputProps, TInputText } from "./Input.types"
-import * as El from "./Input.styled";
+import { InputProps, TInputPassword, TInputText } from "../Input.types"
+import * as El from "../Input.styled";
+import { ThemeCtx } from "../../../../contexts/ThemeCtx";
 
-const InputText: React.FC<InputProps & TInputText> = (props) => {
+const InputPaassword: React.FC<InputProps & TInputPassword> = (props) => {
 
   const [value, setValue] = React.useState<string>("")
   const [isFocus, setIsFocus] = React.useState(false)
@@ -30,10 +30,10 @@ const InputText: React.FC<InputProps & TInputText> = (props) => {
       <div className="Input-wrapper">
         <label className="label" htmlFor={props.id}>{props.label}</label>
         <El.InputText
-          id={props.id || props.label}
+          id={props.id}
           ref={ref}
-          type={props.type}
           value={value}
+          type="password"
           onChange={onChange}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
@@ -47,18 +47,18 @@ const InputText: React.FC<InputProps & TInputText> = (props) => {
   );
 }
 
-export default InputText
+export default InputPaassword
 
-InputText.defaultProps = {
+InputPaassword.defaultProps = {
   disabled: false,
   label: "Caption",
   className: "",
   onChange: () => { },
   width: "300px",
+  id: "input",
   autoComplete: "off",
   placeholder: "Placeholder",
-  value: "",
-  type: "text"
+  type: "password"
 };
 
 

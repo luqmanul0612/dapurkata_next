@@ -18,6 +18,7 @@ type TFormAdd = {
   printType: string;
   numberOfPages: number
   isbn: string;
+  cover: string;
 }
 
 type TPopupDelete = {
@@ -43,15 +44,19 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
   });
   const { isValid } = formState;
 
+  console.log({watch: watch()})
+
+  const onSubmit = (values: TFormAdd) => {
+    console.log({ values })
+  };
+
   return (
-    <StyledModal
-      open={open}
-    >
+    <StyledModal open={open}>
       <Fade in={open} unmountOnExit>
-        <ContentWrapper>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="head"><p>Add Data</p><Button color="error" onClick={onClickClose}><CloseIcon /></Button></div>
           <div className="content">
-            <Form>
+            <FormWrapper>
               <div className="section">
                 <Controller
                   name="title"
@@ -215,7 +220,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
                 <CoverInput>
                   <p>Cover File</p>
                   <Controller
-                    name="numberOfPages"
+                    name="cover"
                     control={control}
                     render={({ field: { onChange, value }, fieldState: { error } }) => (
                       <FileUploader
@@ -226,13 +231,13 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
                   />
                 </CoverInput>
               </div>
-            </Form>
+            </FormWrapper>
           </div>
           <div className="footer">
-            <ButtonComp label="ADD" variant="contained" color="error" onClick={onClickClose} />
+            <ButtonComp label="ADD" type="submit" variant="contained" color="error"/>
             <ButtonComp label="Cancel" variant="outlined" onClick={onClickClose} />
           </div>
-        </ContentWrapper>
+        </Form>
       </Fade>
     </StyledModal>
   );
@@ -250,7 +255,8 @@ const validationSchema =
     description: yup.string().required("Required"),
     printType: yup.string().required("Required"),
     numberOfPages: yup.number().required("Required"),
-    isbn: yup.string().required("Required")
+    isbn: yup.string().required("Required"),
+    cover: yup.string().required("Required")
   });
 
 const defaultValues = {
@@ -262,7 +268,8 @@ const defaultValues = {
   description: "",
   printType: "",
   numberOfPages: undefined,
-  isbn: ""
+  isbn: "",
+  cover: undefined
 };
 
 const CloseIcon = () => (<svg viewBox="0 0 512 512"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32" d="M368 368L144 144M368 144L144 368" /></svg>)
@@ -279,10 +286,10 @@ const StyledModal = styled(Modal)`
   } 
 `;
 
-const ContentWrapper = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 60vw;
+  width: 1200px;
   background: #FFFFFF;
   border: 1px solid #BCC8E7;
   box-sizing: border-box;
@@ -323,25 +330,8 @@ const ContentWrapper = styled.div`
     border-radius: 5px;
     padding: 10px 20px;
     margin: 0 10px;
-    > div {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      >p:nth-child(1) {
-        margin: 0;
-        font-weight: 600;
-        font-size: 15px;
-        color: #2B2F3C;
-        line-height: 1.2;
-      }
-      >p:nth-child(2) {
-        margin: 0;
-        font-size: 14px;
-        font-weight: 400;
-        color: #2B2F3C;
-        line-height: 1.2;
-      }
-    }
+    max-height: 80vh;
+    overflow-y: auto;
   }
   >div.footer {
     display: flex;
@@ -355,22 +345,39 @@ const ContentWrapper = styled.div`
       width: fit-content;
     }
   }
+  @media screen and (max-width: 1200px) {
+    width: 95vw;
+  }
+  @media screen and (max-width: 900px) {
+    width: 95vw;
+  }
+  @media screen and (max-width: 600px) {
+    width: 98vw;
+  }
 `;
 
-const Form = styled.form`
+const FormWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 25px;
+  width: 100%;
   > div.section {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
+  }
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
   }
 `
 
 const InputGroup = styled.div`
   display: flex;
   gap: 15px;
+  @media screen and (max-width: 1200px) {
+    flex-direction: column;
+  }
 `
 
 const CoverInput = styled.div`

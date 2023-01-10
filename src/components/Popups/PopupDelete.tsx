@@ -120,7 +120,7 @@ const ContentWrapper = styled.div`
     gap: 10px;
     .MuiButton-root.delete {
       width: fit-content;
-      background: ${({theme})=>theme?.colors?.red?.["06"]};
+      background: ${({theme})=>theme?.colors?.red?.["07"]};
     }
     .MuiButton-root {
       width: fit-content;

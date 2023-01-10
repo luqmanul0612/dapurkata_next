@@ -63,7 +63,7 @@ const TableComponent = ({ dataTable, onChange = () => { }, checkbox = false, max
               <TableRow>
                 <TableCell colSpan={columns.length + (checkbox ? 1 : 0)}>
                   <LoadingWrapper>
-                    <FacebookCircularProgress size={50} thickness={5}/>
+                    <FacebookCircularProgress size={50} thickness={5} />
                   </LoadingWrapper>
                 </TableCell>
               </TableRow>
@@ -83,6 +83,7 @@ const TableComponent = ({ dataTable, onChange = () => { }, checkbox = false, max
               {checkbox && (
                 <StyledTableCell width={0}>
                   <StyledCheckbox
+                    color="primary"
                     indeterminate={dataTable?.rows?.length > 0 && checked.length > 0 && rows.length !== checked.length}
                     checked={dataTable?.rows?.length > 0 && rows.length === checked.length}
                     onChange={onCheckAll}
@@ -105,7 +106,7 @@ const TableComponent = ({ dataTable, onChange = () => { }, checkbox = false, max
                 >
                   {checkbox && (
                     <StyledTableCell>
-                      <StyledCheckbox checked={checked.includes(row.id)} />
+                      <StyledCheckbox color="primary" checked={checked.includes(row.id)} />
                     </StyledTableCell>
                   )}
                   {columns.map((column) => column.display !== "hidden" && (
@@ -164,7 +165,7 @@ const Main = styled.div`
   .MuiTableRow-root.MuiTableRow-hover{
     transition: background 0.2s ease;
     :hover{
-      background: ${({theme})=>theme?.colors?.primary?.ultrasoft};
+      background: ${({ theme }) => theme?.colors?.primary?.ultrasoft};
     }
   }
 `;
@@ -194,7 +195,7 @@ const StyledCheckbox = styled(Checkbox)`
     width: 20px;
   }
   &.Mui-checked{
-    color: ${({theme})=>theme?.colors?.primary?.default};
+    color: ${({ theme }) => theme?.colors?.primary?.default};
   }
 `;
 

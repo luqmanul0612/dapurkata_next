@@ -14,9 +14,10 @@ import { FacebookCircularProgress } from "../../components/Loading/LoadingWrappe
 type TPopupDelete = {
   open: boolean;
   onClickClose: () => void;
+  refetch: (p?: any) => void;
 }
 
-const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose }) => {
+const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, refetch }) => {
 
   React.useEffect(() => {
     if (open) {
@@ -38,6 +39,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose }) => {
   React.useEffect(() => {
     if (dataAddBook?.data?.id) {
       onClickClose()
+      refetch()
     }
   }, [dataAddBook])
 

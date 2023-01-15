@@ -9,15 +9,17 @@ import { FacebookCircularProgress } from '../Loading/LoadingWrapper';
 type TPopupDelete = {
   open: boolean;
   onClickClose: () => void;
-  data: { title: string; id: string; }
+  data: { title: string; id: string; };
+  refetch: (p?: any) => void;
 }
 
-const PopupDelete: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
+const PopupDelete: FC<TPopupDelete> = ({ open, onClickClose, data, refetch }) => {
   const { data: dataDelete, error, loading, mutation } = useMutation<TMutationDeleteBook>({ method: "DELETE", url: "/api/book" })
 
   React.useEffect(() => {
     if (dataDelete?.data?.id) {
       onClickClose()
+      refetch()
     }
   }, [dataDelete])
 

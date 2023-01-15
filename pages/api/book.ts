@@ -91,13 +91,13 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       }
       break;
     }
-    case "/api/book/delete": {
-      auth(req, res)
+    case "DELETE": {
+      // auth(req, res)
       try {
         await deleteBookSchema.validate(req.body);
         const findImage = await prisma.image.findUnique({ where: { bookId: req.body?.bookId } })
         const deleteBook = await prisma.book.delete({ where: { id: req.body?.bookId } })
-        await cloudinary.uploader.destroy(findImage?.publicId!)
+        if (deleteBook) await cloudinary.uploader.destroy(findImage?.publicId!)
         res.json({ status: "200", data: deleteBook })
       } catch (error) {
         httpCatchError({ error, res })

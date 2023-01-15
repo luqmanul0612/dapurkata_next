@@ -56,10 +56,14 @@ const Book: React.FC = () => {
     refetch()
     setPopupAdd(false)
   }
+  const onCloseDeleteBook = () => {
+    refetch()
+    setPopupDelete(false)
+  }
 
   return (
     <Main>
-      <PopupDelete open={popupDelete} onClickClose={() => setPopupDelete(false)} data={deleteData} />
+      <PopupDelete open={popupDelete} onClickClose={onCloseDeleteBook} data={deleteData} />
       <PopupAddBook open={popupAdd} onClickClose={onCloseAddBook} />
       <p className="title">Portal - Book</p>
       <Content>

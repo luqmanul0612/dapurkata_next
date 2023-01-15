@@ -1,7 +1,10 @@
 import { Backdrop, Button, Fade, Modal } from '@mui/material';
 import React, { FC } from 'react';
 import styled from 'styled-components';
+import useMutation from '../../hooks/useMutation';
+import { TMutationDeleteBook } from '../../types/book';
 import ButtonComp from '../elements/Button';
+import { FacebookCircularProgress } from '../Loading/LoadingWrapper';
 
 type TPopupDelete = {
   open: boolean;
@@ -10,6 +13,21 @@ type TPopupDelete = {
 }
 
 const PopupDelete: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
+  const { data: dataDelete, error, loading, mutation } = useMutation<TMutationDeleteBook>({ method: "DELETE", url: "/api/book" })
+
+  React.useEffect(() => {
+    if (dataDelete?.data?.id) {
+      onClickClose()
+    }
+  }, [dataDelete])
+
+  const onClickDelete = () => {
+    mutation({
+      body: {
+        bookId: data?.id
+      }
+    })
+  }
 
   return (
     <StyledModal
@@ -23,8 +41,8 @@ const PopupDelete: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
             <div><p>Title</p><p>{data?.title || "-"}</p></div>
           </div>
           <div className="footer">
-            <ButtonComp label="Delete" className="delete" variant="contained" color="error" onClick={onClickClose} />
-            <ButtonComp label="Cancel" variant="outlined" onClick={onClickClose} />
+            <ButtonComp label="Delete" className="delete" variant="contained" onClick={onClickDelete} startIcon={loading && <FacebookCircularProgress size={20} thickness={3} />} disabled={loading} />
+            <ButtonComp label="Cancel" variant="outlined" onClick={onClickClose} disabled={loading} />
           </div>
         </ContentWrapper>
       </Fade>
@@ -120,10 +138,13 @@ const ContentWrapper = styled.div`
     gap: 10px;
     .MuiButton-root.delete {
       width: fit-content;
-      background: ${({theme})=>theme?.colors?.red?.["07"]};
+      background: ${({ theme }) => theme?.colors?.red?.["07"]};
     }
     .MuiButton-root {
       width: fit-content;
+    }
+    .MuiButton-root.Mui-disabled {
+      background: ${({ theme }) => theme?.colors?.primary?.Soft};
     }
   }
 `;

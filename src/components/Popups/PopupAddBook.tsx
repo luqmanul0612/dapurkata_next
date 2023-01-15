@@ -242,7 +242,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose }) => {
             </FormWrapper>
           </div>
           <div className="footer">
-            <ButtonComp label="ADD" type="submit" variant="contained" color="error" startIcon={loading && <FacebookCircularProgress size={20} thickness={3} />} disabled={loading || !isValid} />
+            <ButtonComp label="ADD" type="submit" variant="contained" startIcon={loading && <FacebookCircularProgress size={20} thickness={3} />} disabled={loading || !isValid} />
             <ButtonComp label="Cancel" variant="outlined" onClick={onClickClose} disabled={loading} />
           </div>
         </Form>

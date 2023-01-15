@@ -44,7 +44,7 @@ const Main = styled.div`
     color: ${({ theme }) => theme?.colors?.primary?.default};
     border-color: ${({ theme }) => theme?.colors?.primary?.default};
   }
-  .Mui-disabled {
+  .MuiButton-root.Mui-disabled {
     background: ${({ theme }) => theme?.colors?.primary?.Soft};
   }
 `

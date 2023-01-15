@@ -28,9 +28,14 @@ const Login: React.FC = () => {
   useEffect(() => {
     sessionStorage.removeItem("token")
   }, [])
-  
 
-  const { data, error, loading, mutation } = useMutation({
+  type TLoginMutaion = {
+    statusCode: string;
+    token: string;
+  }
+
+
+  const { data, error, loading, mutation } = useMutation<TLoginMutaion>({
     method: "POST",
     url: "/api/user/login",
   })
@@ -63,48 +68,48 @@ const Login: React.FC = () => {
   return (
     <Fade in>
       <Main>
-      <LoadingWrapper open={loading} />
-      <div>
-        <p className="title">LOGIN</p>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <div className="input-wrapper">
-            <Controller
-              name="username"
-              control={control}
-              render={({ field: { onChange, value }, fieldState: { error } }) => (
-                <InputText
-                  type="text"
-                  width="100%"
-                  label="Username"
-                  placeholder="Masukan username anda"
-                  value={value}
-                  autoComplete="off"
-                  onChange={(e) => onChange(e.target.value)}
-                />
-              )}
-            />
-            <Controller
-              name="password"
-              control={control}
-              render={({ field: { onChange, value }, fieldState: { error } }) => (
-                <InputText
-                  type="password"
-                  width="100%"
-                  label="Password"
-                  placeholder="Masukan password anda"
-                  value={value}
-                  autoComplete="off"
-                  onChange={(e) => onChange(e.target.value)}
-                />
-              )}
-            />
-          </div>
-          <div className="button-wrapper">
-            <Button label="Login" variant="contained" type="submit" disabled={!isValid} />
-          </div>
-        </Form>
-      </div>
-    </Main>
+        <LoadingWrapper open={loading} />
+        <div>
+          <p className="title">LOGIN</p>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <div className="input-wrapper">
+              <Controller
+                name="username"
+                control={control}
+                render={({ field: { onChange, value }, fieldState: { error } }) => (
+                  <InputText
+                    type="text"
+                    width="100%"
+                    label="Username"
+                    placeholder="Masukan username anda"
+                    value={value}
+                    autoComplete="off"
+                    onChange={(e) => onChange(e.target.value)}
+                  />
+                )}
+              />
+              <Controller
+                name="password"
+                control={control}
+                render={({ field: { onChange, value }, fieldState: { error } }) => (
+                  <InputText
+                    type="password"
+                    width="100%"
+                    label="Password"
+                    placeholder="Masukan password anda"
+                    value={value}
+                    autoComplete="off"
+                    onChange={(e) => onChange(e.target.value)}
+                  />
+                )}
+              />
+            </div>
+            <div className="button-wrapper">
+              <Button label="Login" variant="contained" type="submit" disabled={!isValid} />
+            </div>
+          </Form>
+        </div>
+      </Main>
     </Fade>
   )
 }

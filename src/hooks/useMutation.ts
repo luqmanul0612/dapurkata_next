@@ -6,13 +6,14 @@ axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 const initHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
+  "Authorization": typeof window === "undefined" ? null : sessionStorage?.getItem("token")
 };
 
 type TMutationProps = {
   url: string;
   method: "POST" | "PUT" | "DELETE" | "GET" | "PATCH";
   skip?: boolean;
-  headers?: { [name: string]: string | boolean };
+  headers?: { [name: string]: string | boolean | null };
   body?: { [name: string]: string };
 }
 

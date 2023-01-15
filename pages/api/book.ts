@@ -23,9 +23,9 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       break;
     }
     case "POST": {
-      console.log(req.body.description)
+      auth(req, res)
       try {
-        // await addBookSchema.validate(req.body);
+        await addBookSchema.validate(req.body);
         const limit = 1048576
         const bufferFile = Buffer.from(req.body.cover.split("base64,")[1], "base64");
         if (bufferFile.byteLength > limit) throw new Error(JSON.stringify({ statusCode: "400", message: `Max file size ${limit / 1024}` }))
@@ -92,7 +92,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       break;
     }
     case "DELETE": {
-      // auth(req, res)
+      auth(req, res)
       try {
         await deleteBookSchema.validate(req.body);
         const findImage = await prisma.image.findUnique({ where: { bookId: req.body?.bookId } })

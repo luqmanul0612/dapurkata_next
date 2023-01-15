@@ -8,7 +8,7 @@ import * as yup from "yup"
 import InputText from '../elements/Input/Input'
 import FileUploader from '../elements/FileUploader/FileUploader'
 import useMutation from '../../hooks/useMutation'
-import { TFormAdd, TMutationBook } from '../../types/book'
+import { TFormAdd, TMutationAddBook } from '../../types/book'
 import { FacebookCircularProgress } from "../../components/Loading/LoadingWrapper"
 
 type TPopupDelete = {
@@ -33,7 +33,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose }) => {
   });
   const { isValid } = formState;
 
-  const { data: dataAddBook, error, loading, mutation } = useMutation<TMutationBook>({ method: "POST", url: "/api/book" })
+  const { data: dataAddBook, error, loading, mutation } = useMutation<TMutationAddBook>({ method: "POST", url: "/api/book" })
 
   React.useEffect(() => {
     if (dataAddBook?.data?.id) {

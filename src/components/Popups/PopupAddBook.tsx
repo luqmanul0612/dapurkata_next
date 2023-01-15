@@ -7,27 +7,16 @@ import ButtonComp from '../elements/Button'
 import * as yup from "yup"
 import InputText from '../elements/Input/Input'
 import FileUploader from '../elements/FileUploader/FileUploader'
-
-type TFormAdd = {
-  title: string;
-  authorName: string;
-  price: number;
-  stock: number;
-  publisher: string;
-  description: string;
-  printType: string;
-  numberOfPages: number
-  isbn: string;
-  cover: string;
-}
+import useMutation from '../../hooks/useMutation'
+import { TFormAdd, TMutationBook } from '../../types/book'
+import { FacebookCircularProgress } from "../../components/Loading/LoadingWrapper"
 
 type TPopupDelete = {
   open: boolean;
   onClickClose: () => void;
-  data: { title: string; id: string; }
 }
 
-const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
+const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose }) => {
 
   React.useEffect(() => {
     if (open) {
@@ -44,10 +33,20 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
   });
   const { isValid } = formState;
 
-  console.log({watch: watch()})
+  const { data: dataAddBook, error, loading, mutation } = useMutation<TMutationBook>({ method: "POST", url: "/api/book" })
+
+  React.useEffect(() => {
+    if (dataAddBook?.data?.id) {
+      onClickClose()
+    }
+  }, [dataAddBook])
 
   const onSubmit = (values: TFormAdd) => {
-    console.log({ values })
+    mutation({
+      body: {
+        ...values
+      }
+    })
   };
 
   return (
@@ -72,6 +71,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
                       width="100%"
                       onChange={onChange}
                       id="title"
+                      disabled={loading}
                     />
                   )}
                 />
@@ -89,6 +89,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
                       width="100%"
                       onChange={onChange}
                       id="authorName"
+                      disabled={loading}
                     />
                   )}
                 />
@@ -106,6 +107,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
                       width="100%"
                       onChange={onChange}
                       id="description"
+                      disabled={loading}
                     />
                   )}
                 />
@@ -124,6 +126,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
                         width="100%"
                         onChange={(value) => onChange(value?.floatValue)}
                         id="price"
+                        disabled={loading}
                       />
                     )}
                   />
@@ -141,6 +144,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
                         width="100%"
                         onChange={(value) => onChange(value?.floatValue)}
                         id="stock"
+                        disabled={loading}
                       />
                     )}
                   />
@@ -159,6 +163,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
                       width="100%"
                       onChange={onChange}
                       id="ISBN"
+                      disabled={loading}
                     />
                   )}
                 />
@@ -178,6 +183,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
                       width="100%"
                       onChange={onChange}
                       id="publisher"
+                      disabled={loading}
                     />
                   )}
                 />
@@ -196,6 +202,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
                         width="100%"
                         onChange={(e) => onChange(e.target.value)}
                         id="Print Type"
+                        disabled={loading}
                       />
                     )}
                   />
@@ -213,6 +220,7 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
                         width="100%"
                         onChange={(value) => onChange(value?.floatValue)}
                         id="numberOfPages"
+                        disabled={loading}
                       />
                     )}
                   />
@@ -234,8 +242,8 @@ const PopupAddBook: FC<TPopupDelete> = ({ open, onClickClose, data }) => {
             </FormWrapper>
           </div>
           <div className="footer">
-            <ButtonComp label="ADD" type="submit" variant="contained" color="error"/>
-            <ButtonComp label="Cancel" variant="outlined" onClick={onClickClose} />
+            <ButtonComp label="ADD" type="submit" variant="contained" color="error" startIcon={loading && <FacebookCircularProgress size={20} thickness={3} />} disabled={loading || !isValid} />
+            <ButtonComp label="Cancel" variant="outlined" onClick={onClickClose} disabled={loading} />
           </div>
         </Form>
       </Fade>

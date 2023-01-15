@@ -20,7 +20,7 @@ const BookList: FC<TBookList> = () => {
   const [search, setSearch] = useState("")
 
   const { data, error, loading } = useQuery<TResBook>({
-    method: "POST",
+    method: "GET",
     url: "/api/book"
   })
 

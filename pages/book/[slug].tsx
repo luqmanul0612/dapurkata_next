@@ -24,9 +24,9 @@ type TResBook = {
 
 const BookPath: FC<TBookPath> = ({ slug }) => {
   const { data, error, loading } = useQuery<TResBook>({
-    method: "POST",
+    method: "GET",
     url: "/api/book",
-    body: { slug: slug as string }
+    params: { slug: slug as string }
   })
   return (
     <>

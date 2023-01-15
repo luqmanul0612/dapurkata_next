@@ -12,3 +12,32 @@ export type TBook = {
   isbn: string;
   slug: string;
 }
+
+export type TFormAdd = {
+  title: string;
+  authorName: string;
+  price: number;
+  stock: number;
+  publisher: string;
+  description: string;
+  printType: string;
+  numberOfPages: number
+  isbn: string;
+  cover: string;
+}
+
+export type TMutationBook = {
+  statusCode: string;
+  data: {
+    id: string;
+    title: string;
+    authorName: string;
+    price: number;
+    stock: number;
+    publisher: string;
+    description: string;
+    printType: string;
+    numberOfPages: number
+    isbn: string;
+  }
+}

@@ -50,7 +50,7 @@ const Book: FC<TBookContainer> = ({ data, loading }) => {
               <div className="cover">
                 <div>
                   <Image
-                    src={data?.Image.secureUrl}
+                    src={data?.Image?.secureUrl}
                     fill
                     alt="cover"
                   />

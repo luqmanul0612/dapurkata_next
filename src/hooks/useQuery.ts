@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 const initHeaders = {
@@ -12,17 +13,19 @@ type TUseQueryProps = {
   method: "POST" | "PUT" | "DELETE" | "GET" | "PATCH";
   skip?: boolean;
   headers?: { [name: string]: string | boolean };
+  params?: { [name: string]: string | boolean };
   body?: { [name: string]: string };
   refetchDelay?: number;
 }
 
-const useQuery = <TResponse>({ url, method, body: customBody = {}, headers: customHeaders = {}, skip, refetchDelay = 0 }: TUseQueryProps) => {
+const useQuery = <TResponse>({ url, method, body: customBody = {}, headers: customHeaders = {}, params = {}, skip, refetchDelay = 0 }: TUseQueryProps) => {
   const [data, setData] = useState(null);
   const [isDirty, setIsDirty] = useState(false);
   const [error, setError] = useState(null);
   const [headers, setHeaders] = useState(customHeaders);
   const [body, setBody] = useState({});
   const [loading, setLoading] = useState(false);
+  const Router = useRouter()
 
   const refetch = ({ body: refetchBody = body, headers: refetchHeaders = initHeaders } = {}) => {
     setBody(refetchBody);
@@ -42,13 +45,14 @@ const useQuery = <TResponse>({ url, method, body: customBody = {}, headers: cust
           method,
           headers: { ...initHeaders, ...headers },
           data: { ...customBody, ...body },
+          params,
           cancelToken: source.token,
         });
         if (!unmount) setData(res.data);
       } catch (err: any) {
         if (err.response && err.response.status === 401) {
           sessionStorage.removeItem("token")
-          window.location.assign("/login");
+          Router.replace("/portal/login")
         }
         if (!unmount) setError(err.response || err);
       } finally {

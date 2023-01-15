@@ -17,8 +17,8 @@ const Book: React.FC = () => {
     data: TBook[]
   }
 
-  const { data, error, loading } = useQuery<TResBook>({
-    method: "POST",
+  const { data, error, loading, refetch } = useQuery<TResBook>({
+    method: "GET",
     url: "/api/book"
   })
 
@@ -52,10 +52,15 @@ const Book: React.FC = () => {
     return { columns, rows };
   }, [data]);
 
+  const onCloseAddBook = () => {
+    refetch()
+    setPopupAdd(false)
+  }
+
   return (
     <Main>
       <PopupDelete open={popupDelete} onClickClose={() => setPopupDelete(false)} data={deleteData} />
-      <PopupAddBook open={popupAdd} onClickClose={() => setPopupAdd(false)} data={deleteData} />
+      <PopupAddBook open={popupAdd} onClickClose={onCloseAddBook} />
       <p className="title">Portal - Book</p>
       <Content>
         <div className="action">

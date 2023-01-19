@@ -23,41 +23,43 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       break;
     }
     case "POST": {
-      auth(req, res)
-      try {
-        await addBookSchema.validate(req.body);
-        const limit = 1048576
-        const bufferFile = Buffer.from(req.body.cover.split("base64,")[1], "base64");
-        if (bufferFile.byteLength > limit) throw new Error(JSON.stringify({ statusCode: "400", message: `Max file size ${limit / 1024}` }))
-        else {
-          const image = await cloudinary.uploader.upload(req.body.cover, { folder: "dapurkata/books" })
-          const addBook = await prisma.book.create({
-            data: {
-              title: req.body.title || undefined,
-              authorName: req.body.authorName || undefined,
-              price: req.body.price || undefined,
-              stock: req.body.stock || undefined,
-              publisher: req.body.publisher || undefined,
-              description: req.body.description || undefined,
-              printType: req.body.printType || undefined,
-              numberOfPages: req.body.numberOfPages || undefined,
-              isbn: req.body.isbn || undefined,
-              slug: stringPath(`${req.body.publisher}-${req.body.title}`),
-              Image: {
-                create: {
-                  publicId: image.public_id,
-                  url: image.url,
-                  secureUrl: image.secure_url,
+      auth(req, res).then(async () => {
+        try {
+          await addBookSchema.validate(req.body);
+          const limit = 1048576
+          const bufferFile = Buffer.from(req.body.cover.split("base64,")[1], "base64");
+          if (bufferFile.byteLength > limit) throw new Error(JSON.stringify({ statusCode: "400", message: `Max file size ${limit / 1024}` }))
+          else {
+            const image = await cloudinary.uploader.upload(req.body.cover, { folder: "dapurkata/books" })
+            const addBook = await prisma.book.create({
+              data: {
+                title: req.body.title || undefined,
+                authorName: req.body.authorName || undefined,
+                price: req.body.price || undefined,
+                stock: req.body.stock || undefined,
+                publisher: req.body.publisher || undefined,
+                description: req.body.description || undefined,
+                printType: req.body.printType || undefined,
+                numberOfPages: req.body.numberOfPages || undefined,
+                isbn: req.body.isbn || undefined,
+                slug: stringPath(`${req.body.publisher}-${req.body.title}`),
+                Image: {
+                  create: {
+                    publicId: image.public_id,
+                    url: image.url,
+                    secureUrl: image.secure_url,
+                  }
                 }
-              }
-            },
-          })
-          res.json({ status: "200", data: addBook })
+              },
+            })
+            res.json({ status: "200", data: addBook })
+          }
+        } catch (error) {
+          throw error
         }
-      } catch (error) {
-        console.log(error)
+      }).catch((error) => {
         httpCatchError({ error, res })
-      }
+      })
       break;
     }
     case "/api/book/update": {
@@ -92,16 +94,19 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       break;
     }
     case "DELETE": {
-      auth(req, res)
-      try {
-        await deleteBookSchema.validate(req.body);
-        const findImage = await prisma.image.findUnique({ where: { bookId: req.body?.bookId } })
-        const deleteBook = await prisma.book.delete({ where: { id: req.body?.bookId } })
-        if (deleteBook) await cloudinary.uploader.destroy(findImage?.publicId!)
-        res.json({ status: "200", data: deleteBook })
-      } catch (error) {
+      auth(req, res).then(async () => {
+        try {
+          await deleteBookSchema.validate(req.body);
+          const findImage = await prisma.image.findUnique({ where: { bookId: req.body?.bookId } })
+          const deleteBook = await prisma.book.delete({ where: { id: req.body?.bookId } })
+          if (deleteBook) await cloudinary.uploader.destroy(findImage?.publicId!)
+          res.json({ status: "200", data: deleteBook })
+        } catch (error) {
+          throw error
+        }
+      }).catch((error) => {
         httpCatchError({ error, res })
-      }
+      })
       break;
     }
     default: res.status(400).send(`The HTTP ${req.method} method is not supported at this route.`)

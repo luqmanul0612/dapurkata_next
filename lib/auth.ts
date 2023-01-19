@@ -8,6 +8,7 @@ export const auth = async (req: NextApiRequest, res: NextApiResponse) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
     if (!decoded) throw new Error("Invalid token")
   } catch (error: any) {
+    console.log({error})
     res.status(401).send({
       statusCode: "401",
       message: error?.message

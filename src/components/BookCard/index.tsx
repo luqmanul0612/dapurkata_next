@@ -51,6 +51,7 @@ const Main = styled.div`
   transition: 0.3s all ease;
   >div.cover {
     border-radius: 3px;
+    background: #fff;
     overflow: hidden;
     height: 100%;
     width: 100%;

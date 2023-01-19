@@ -31,8 +31,8 @@ async function main() {
       Image: {
         create: {
           publicId: "dapurkata/books/1_q1urcu",
-          url: 'http://res.cloudinary.com/diw72nenn/image/upload/v1672974973/dapurkata/books/1_q1urcu.jpg',
-          secureUrl: 'https://res.cloudinary.com/diw72nenn/image/upload/v1672974973/dapurkata/books/1_q1urcu.jpg'
+          url: 'http://res.cloudinary.com/dgkw95qok/image/upload/v1674025728/dapurkata/books/1_pbz6zb.jpg',
+          secureUrl: 'https://res.cloudinary.com/dgkw95qok/image/upload/v1674025728/dapurkata/books/1_pbz6zb.jpg'
         }
       }
     },
@@ -50,8 +50,8 @@ async function main() {
       Image: {
         create: {
           publicId: "dapurkata/books/2_ydc24h",
-          url: 'http://res.cloudinary.com/diw72nenn/image/upload/v1672984134/dapurkata/books/2_ydc24h.jpg',
-          secureUrl: 'https://res.cloudinary.com/diw72nenn/image/upload/v1672984134/dapurkata/books/2_ydc24h.jpg',
+          url: 'http://res.cloudinary.com/dgkw95qok/image/upload/v1674025726/dapurkata/books/2_l62g59.jpg',
+          secureUrl: 'https://res.cloudinary.com/dgkw95qok/image/upload/v1674025726/dapurkata/books/2_l62g59.jpg',
         }
       }
     },
@@ -69,8 +69,8 @@ async function main() {
       Image: {
         create: {
           publicId: "dapurkata/books/3_tefwwd",
-          url: 'http://res.cloudinary.com/diw72nenn/image/upload/v1672974975/dapurkata/books/3_tefwwd.jpg',
-          secureUrl: 'https://res.cloudinary.com/diw72nenn/image/upload/v1672974975/dapurkata/books/3_tefwwd.jpg',
+          url: 'http://res.cloudinary.com/dgkw95qok/image/upload/v1674025727/dapurkata/books/3_eg4ybd.jpg',
+          secureUrl: 'https://res.cloudinary.com/dgkw95qok/image/upload/v1674025727/dapurkata/books/3_eg4ybd.jpg',
         }
       }
     },
@@ -88,8 +88,8 @@ async function main() {
       Image: {
         create: {
           publicId: "dapurkata/books/4_k6qi2n",
-          url: 'http://res.cloudinary.com/diw72nenn/image/upload/v1672974973/dapurkata/books/4_k6qi2n.jpg',
-          secureUrl: 'https://res.cloudinary.com/diw72nenn/image/upload/v1672974973/dapurkata/books/4_k6qi2n.jpg',
+          url: 'http://res.cloudinary.com/dgkw95qok/image/upload/v1674025728/dapurkata/books/4_wmhcfv.jpg',
+          secureUrl: 'https://res.cloudinary.com/dgkw95qok/image/upload/v1674025728/dapurkata/books/4_wmhcfv.jpg',
         }
       }
     },
@@ -107,8 +107,8 @@ async function main() {
       Image: {
         create: {
           publicId: "dapurkata/books/5_jqphtw",
-          url: 'http://res.cloudinary.com/diw72nenn/image/upload/v1672974975/dapurkata/books/5_jqphtw.jpg',
-          secureUrl: 'https://res.cloudinary.com/diw72nenn/image/upload/v1672974975/dapurkata/books/5_jqphtw.jpg',
+          url: 'http://res.cloudinary.com/dgkw95qok/image/upload/v1674025728/dapurkata/books/5_mcqkdb.jpg',
+          secureUrl: 'https://res.cloudinary.com/dgkw95qok/image/upload/v1674025728/dapurkata/books/5_mcqkdb.jpg',
         }
       }
     },

@@ -4,6 +4,7 @@ import styled from "styled-components"
 import ButtonComp from "../../../../components/elements/Button"
 import PopupAddBook from "../../../../components/Popups/PopupAddBook"
 import PopupDelete from "../../../../components/Popups/PopupDelete"
+import PopupUpdate from "../../../../components/Popups/PopupUpdateBook"
 import TableComponent from "../../../../components/Tables/TableComponent"
 import useQuery from "../../../../hooks/useQuery"
 import { TBook } from "../../../../types/book"
@@ -11,7 +12,9 @@ import { TBook } from "../../../../types/book"
 const Book: React.FC = () => {
   const [popupDelete, setPopupDelete] = useState(false)
   const [popupAdd, setPopupAdd] = useState(false)
+  const [popupUpdate, setPopupUpdate] = useState(false)
   const [deleteData, setDeleteData] = useState<{ id: string; title: string; }>({ id: "", title: "" })
+  const [updateData, setUpdateData] = useState<TBook | null>(null)
   type TResBook = {
     statusCode: string;
     data: TBook[]
@@ -26,6 +29,11 @@ const Book: React.FC = () => {
     e.stopPropagation()
     setPopupDelete(true)
     setDeleteData(data)
+  }
+
+  const onClickUpdate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, data: TBook) =>{
+    setUpdateData(data)
+    setPopupUpdate(true)
   }
 
   const createData = (id: string, no: string, title: string, authorName: string, action: any) => ({ id, no, title, authorName, action });
@@ -45,6 +53,8 @@ const Book: React.FC = () => {
         val?.title,
         val?.authorName,
         <Action>
+          
+          <Button onClick={(e) => onClickUpdate(e, val)}><EditIcon /></Button>
           <Button onClick={(e) => onClickDelete(e, { id: val?.id, title: val?.title })}><XIcon /></Button>
         </Action>
       );
@@ -59,9 +69,14 @@ const Book: React.FC = () => {
     setPopupDelete(false)
   }
 
+  const onCloseUpdateBook = () => {
+    setPopupUpdate(false)
+  }
+
   return (
     <Main>
       <PopupDelete open={popupDelete} onClickClose={onCloseDeleteBook} data={deleteData} refetch={refetch} />
+      <PopupUpdate open={popupUpdate} onClickClose={onCloseUpdateBook} data={updateData!} refetch={refetch} />
       <PopupAddBook open={popupAdd} onClickClose={onCloseAddBook} refetch={refetch}/>
       <p className="title">Portal - Book</p>
       <Content>
@@ -78,6 +93,7 @@ export default Book
 
 const XIcon = () => (<svg viewBox="0 0 512 512"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M368 368L144 144M368 144L144 368" /></svg>)
 const PlusIcon = () => (<svg viewBox="0 0 512 512"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="54" d="M256 112v288M400 256H112" /></svg>)
+const EditIcon = () => (<svg viewBox="0 0 512 512"><title>Pencil</title><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="44" d="M358.62 129.28L86.49 402.08 70 442l39.92-16.49 272.8-272.13-24.1-24.1zM413.07 74.84l-11.79 11.78 24.1 24.1 11.79-11.79a16.51 16.51 0 000-23.34l-.75-.75a16.51 16.51 0 00-23.35 0z"/></svg>)
 
 const Main = styled.div`
   display: flex;
@@ -96,14 +112,14 @@ const Action = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   padding: 0;
-  .MuiButton-root {
+  > button.MuiButton-root {
     min-width: auto;
     min-height: auto;
     height: fit-content;
     padding: 5px;
     border-radius: 100%;
     margin: 0;
-    background: ${({ theme }) => theme?.colors?.red?.["07"]};
+    
     color: ${({ theme }) => theme?.colors?.text?.ultraSoft};
     :hover {
       background: ${({ theme }) => theme?.colors?.red?.["09"]};
@@ -117,6 +133,12 @@ const Action = styled.div`
         fill: ${({ theme }) => theme?.colors?.text?.ultraSoft};
       }
     }
+  }
+  > button.MuiButton-root:nth-child(1) {
+    background: ${({ theme }) => theme?.colors?.primary?.default};
+  }
+  > button.MuiButton-root:nth-child(2) {
+    background: ${({ theme }) => theme?.colors?.red?.["07"]};
   }
 `;
 

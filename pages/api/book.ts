@@ -62,7 +62,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       })
       break;
     }
-    case "/api/book/update": {
+    case "PUT": {
       auth(req, res)
       try {
         await updateBookSchema.validate(req.body);

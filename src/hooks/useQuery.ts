@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useRouter } from "next/router";
+import { axiosInstance } from "./axios";
+import axios from "axios";
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 const initHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
-  "Authorization": typeof window === "undefined" ? null : sessionStorage?.getItem("token")
 };
 
 type TUseQueryProps = {
@@ -41,7 +40,7 @@ const useQuery = <TResponse>({ url, method, body: customBody = {}, headers: cust
     const request = async () => {
       try {
         if (!unmount) setLoading(true);
-        const res = await axios.request({
+        const res = await axiosInstance.request({
           url,
           method,
           headers: { ...initHeaders, ...headers },

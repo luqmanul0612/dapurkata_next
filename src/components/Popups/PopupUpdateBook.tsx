@@ -20,8 +20,6 @@ type TPopupDelete = {
 }
 
 const PopupUpdateBook: FC<TPopupDelete> = (props) => {
-
-  
   
   return (
     <StyledModal open={props.open}>
@@ -64,18 +62,19 @@ const FormData:FC<TPopupDelete> = ({ open, onClickClose, refetch, data }) => {
   });
   const { isValid } = formState;
 
-  const { data: dataAddBook, error, loading, mutation } = useMutation<TMutationAddBook>({ method: "POST", url: "/api/book" })
+  const { data: dataUpdateBook, error, loading, mutation } = useMutation<TMutationAddBook>({ method: "PUT", url: "/api/book" })
 
   React.useEffect(() => {
-    if (dataAddBook?.data?.id) {
+    if (dataUpdateBook?.data?.id) {
       onClickClose()
       refetch()
     }
-  }, [dataAddBook])
+  }, [dataUpdateBook])
 
   const onSubmit = (values: TFormAdd) => {
     mutation({
       body: {
+        bookId: data?.id,
         ...values
       }
     })
@@ -83,7 +82,7 @@ const FormData:FC<TPopupDelete> = ({ open, onClickClose, refetch, data }) => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-          <div className="head"><p>Add Data</p><Button color="error" onClick={onClickClose}><CloseIcon /></Button></div>
+          <div className="head"><p>Update Data</p><Button color="error" onClick={onClickClose}><CloseIcon /></Button></div>
           <div className="content">
             <FormWrapper>
               <div className="section">

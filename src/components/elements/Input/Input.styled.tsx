@@ -75,7 +75,6 @@ export const InputText = styled.input`
   border: 1.5px solid ${({ theme }) => theme.colors?.primary?.default};
   outline: none;
   border-radius: 25px;
-  font-family: "Poppins";
   font-weight: 400;
   font-size: 14px;
   padding: 0 40px 0 18px;
@@ -354,7 +353,6 @@ export const Option = styled.li<TOption>`
 export const InputTextArea = styled.textarea`
   border: 1.5px solid ${({ theme }) => theme.colors?.primary?.default};
   outline: none;
-  font-family: "Poppins";
   border-radius: 15px;
   font-weight: 400;
   font-size: 14px;
